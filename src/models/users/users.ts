@@ -1,15 +1,15 @@
 import { Model, DataTypes } from "sequelize";
 import { sequelize_conf } from "../../config/mysql";
+import { Role } from "../roles/roles";
 
 class User extends Model {}
 
-const initialized_user = User.init(
+const initializedUser = User.init(
   {
-    id: {
+    user_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: 'user_id'
     },
     name: {
       type: DataTypes.STRING,
@@ -20,15 +20,15 @@ const initialized_user = User.init(
       allowNull: false,
     },
     password: {
-      type: DataTypes.CHAR,
+      type: DataTypes.CHAR(50),
       allowNull: false,
     },
     roleId: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'roles',
-        key: 'role_id'
-      }
+        model: "roles",
+        key: "role_id",
+      },
     },
   },
   {
@@ -37,4 +37,6 @@ const initialized_user = User.init(
   }
 );
 
-export { sequelize_conf as sequelize, User, initialized_user };
+Role.hasMany(User);
+
+export { User, initializedUser };
