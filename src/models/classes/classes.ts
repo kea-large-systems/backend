@@ -15,23 +15,13 @@ const initializedClass = Class.init(
       type: DataTypes.STRING(45),
       allowNull: false,
     },
-    // (1) This should be obsolete, trying (2) instead
-    // teacherUserId: {
-    //   type: DataTypes.INTEGER,
-    //   field: "teacher_user_id",
-    //   references: {
-    //     model: "users",
-    //     key: "user_id",
-    //   },
-    // },
   },
   {
     sequelize: sequelize_conf,
-    modelName: "roles",
+    modelName: "classes",
   }
 );
 
-// (2) Potentially this can replace (1)
 User.hasMany(Class, {
   foreignKey: {
     name: "teacherUserId",
@@ -39,4 +29,4 @@ User.hasMany(Class, {
   },
 });
 
-export { Class, initializedClass }
+export { Class, initializedClass };

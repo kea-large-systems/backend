@@ -23,13 +23,6 @@ const initializedUser = User.init(
       type: DataTypes.CHAR(50),
       allowNull: false,
     },
-    roleId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "roles",
-        key: "role_id",
-      },
-    },
   },
   {
     sequelize: sequelize_conf,
@@ -37,6 +30,11 @@ const initializedUser = User.init(
   }
 );
 
-Role.hasMany(User);
+Role.hasMany(User, {
+  foreignKey: {
+    name: "roleId",
+    field: "role_id",
+  }
+});
 
 export { User, initializedUser };
