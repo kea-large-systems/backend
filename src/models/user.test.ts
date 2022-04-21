@@ -1,4 +1,4 @@
-import { initialized_user, User } from "./user"
+import { initialized_user, User } from "./users"
 
 // Pointless test, both are identical, for some reason...
 test("User matches ORM User", () => {

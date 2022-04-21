@@ -1,8 +1,6 @@
-import { Sequelize, Model, DataTypes } from "sequelize";
-const sequelize = new Sequelize(`${process.env.database}`, `${process.env.username}`, `${process.env.password}`, {
-  host: `${process.env.host}`,
-  dialect: "mysql",
-});
+import { Model, DataTypes } from "sequelize";
+import { sequelize_conf } from "../config/mysql";
+
 class User extends Model {}
 
 const initialized_user = User.init(
@@ -11,6 +9,7 @@ const initialized_user = User.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      field: 'user_id'
     },
     name: {
       type: DataTypes.STRING,
@@ -26,12 +25,16 @@ const initialized_user = User.init(
     },
     roleId: {
       type: DataTypes.INTEGER,
+      references: {
+        model: 'roles',
+        key: 'role_id'
+      }
     },
   },
   {
-    sequelize,
+    sequelize: sequelize_conf,
     modelName: "users",
   }
 );
 
-export { sequelize, User, initialized_user };
+export { sequelize_conf as sequelize, User, initialized_user };
