@@ -11,6 +11,9 @@ const sequelize = new Sequelize(DATABASE, USERNAME, PASSWORD, {
   host: HOST,
   dialect: "mysql",
   logging: false,
+  define: {
+    timestamps: false,
+  },
 });
 
 export { sequelize };

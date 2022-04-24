@@ -36,7 +36,6 @@ const userInit = (sequelize: Sequelize) => {
       field: "role_id",
     },
   });
-
 };
 
 export { User, userInit };
