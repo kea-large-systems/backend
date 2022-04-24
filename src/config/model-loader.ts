@@ -3,6 +3,7 @@ import { userInit } from "../models/users";
 import { classInit } from "../models/classes";
 import { roleInit } from "../models/roles";
 import { exit } from "process";
+import { lectureInit } from "../models/lectures";
 
 /**
  * Creates or updates tables in the schema defined in the ENV `DATABASE`
@@ -49,11 +50,13 @@ const syncModels = async (sequelize: Sequelize | null) => {
       roleInit(sequelize);
       userInit(sequelize);
       classInit(sequelize);
+      lectureInit(sequelize);
 
       await sequelize.sync({ alter: true });
       console.log("Database synced successfully ");
     } catch (e) {
       console.error(`Something went wrong while synchronizing the DB : ${e}`);
+      // throw e
       exit(2);
     }
   } else {

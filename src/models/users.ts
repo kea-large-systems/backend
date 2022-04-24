@@ -26,14 +26,14 @@ const userInit = (sequelize: Sequelize) => {
     },
     {
       sequelize,
-      modelName: "users",
+      tableName: "users",
     }
   );
 
   Role.hasMany(User, {
     foreignKey: {
-      name: "roleId",
-      field: "role_id",
+      name: "role_id",
+      allowNull: false,
     },
   });
 };

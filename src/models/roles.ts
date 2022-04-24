@@ -17,7 +17,7 @@ const roleInit = (sequelize: Sequelize) =>
     },
     {
       sequelize,
-      modelName: "roles",
+      tableName: "roles",
     }
   );
 

@@ -18,14 +18,13 @@ const classInit = (sequelize: Sequelize) => {
     },
     {
       sequelize,
-      modelName: "classes",
+      tableName: "classes",
     }
   );
 
   User.hasMany(Class, {
     foreignKey: {
-      name: "teacherUserId",
-      field: "teacher_user_id",
+      name: "teacher_user_id",
     },
   });
 };
