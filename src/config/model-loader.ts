@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
-import { userInit } from "./users";
-import { classInit } from "./classes";
-import { roleInit } from "./roles";
+import { userInit } from "../models/users";
+import { classInit } from "../models/classes";
+import { roleInit } from "../models/roles";
 import { exit } from "process";
 
 /**

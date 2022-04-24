@@ -1,8 +1,8 @@
 // Import the express in typescript file
 import express from "express";
-import 'dotenv/config'
+import "dotenv/config";
 import { sequelize } from "./config/mysql";
-import { loadDB } from "./models/model-loader";
+import { loadDB } from "./config/model-loader";
 
 const port = process.env.APP_PORT || 5000;
 
