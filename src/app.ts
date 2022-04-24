@@ -11,7 +11,7 @@ import { authenticationRoutes } from "./routes/authentication.routes";
 
 
 
-const port = process.env.APP_PORT || 4200;
+const port = process.env.APP_PORT || 5000;
 
 // Initialize the express engine
 const app: express.Application = express();
