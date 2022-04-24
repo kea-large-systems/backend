@@ -21,7 +21,7 @@
     "Alex Maccagnan",
     "Cristian-valentin Purcea",
     "Itai Gramse",
-    "Asthor Bragason"
+    "Astthor Arnar Bragason"
   ],
   "license": "MIT",
   "bugs": {
@@ -39,6 +39,7 @@
     "passport-microsoft": "^1.0.0"
   },
   "devDependencies": {
+    "@types/express-session": "^1.17.4",
     "@types/passport": "^1.0.7",
     "nodemon": "^2.0.15",
     "ts-node": "^10.5.0",

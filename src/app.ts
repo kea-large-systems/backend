@@ -2,15 +2,14 @@
 import express from "express";
 import "dotenv/config";
 import helmet from 'helmet'
-
-// Needed for passport, but is useful in more scenarios.
-const session = require('express-session');
-
-// ________________________________ PASSPORT FILES ________________________________ 
 import passport from 'passport'
-var MicrosoftStrategy = require('passport-microsoft').Strategy;
-const passportConfig = require('../config.js');
-// ________________________________________________________________________________
+import session from 'express-session';
+
+import { passportSetup } from "./authentication/passportSetup";
+
+import { authenticationRoutes } from "./routes/authentication.routes";
+
+
 
 const port = process.env.APP_PORT || 4200;
 
@@ -19,7 +18,6 @@ const app: express.Application = express();
 
 // Always use a helmet (Security reasons: https://expressjs.com/en/advanced/best-practice-security.html)
 app.use(helmet());
-
 app.use(session({
   secret: 'roll-call-legendary-app', // salt, make session id's harder to crack, value can be anything
   resave: false,  // need to look further into it, "... Typically, you'll want false"
@@ -28,50 +26,21 @@ app.use(session({
 }))
 
 // ________________________________ PASSPORT CONFIG ________________________________
-
+// Don't change the order of the passport config calls
 app.use(passport.initialize());
 app.use(passport.session());
-
-passport.use(new MicrosoftStrategy(passportConfig,
-  function(_accessToken: any, _refreshToken: any, profile: any, done: any) {
-    return done(null, profile);    
-  }
-));
-
-passport.serializeUser((user, cb) => {
-  console.log("________________________ Serialze User ________________________");
-  console.log(user);
-  console.log("________________________ _____________ ________________________");
-  cb(null, user);
-});
-passport.deserializeUser((user: Express.User, cb) => {
-  console.log("________________________ Deserialze User ________________________");
-  console.log(user);
-  console.log("________________________ _______________ ________________________");
-  cb(null, user);
-});
+passportSetup.microsoftStrategySetup();
+passportSetup.serialization();
 // __________________________________________________________________________________
-
 
 // Handling '/' Request
 app.get("/", (req, res) => {
-  console.log("User info", req.user);
-  
-  res.send({ message: "Live and running typescript, baby" });
+  res.send({ message: "Live and running typescript, baby", user: req.user });
 });
 
-// _______________________ Testing Authentication with passport _______________________
-app.get('/login', passport.authenticate('microsoft'),(res, req) => {
-  console.log(req, res);
-});
+// app.use Routes
+app.use('/auth', authenticationRoutes);
 
-// Difference is that we're going to send it an object
-// 4200  /auth/microsoft?code=
-app.get('/auth/microsoft', passport.authenticate('microsoft', {
-  successRedirect: '/',
-  failureRedirect: '/loginFailed'
-}));
-// ____________________________________________________________________________________
 
 app.all("*", (_req, res) => {
   res.send({ error: 404, message: "not found" });
