@@ -18,7 +18,7 @@ const lectureInit = (sequelize: Sequelize) => {
       started_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: NOW,
+        defaultValue: Sequelize.fn('NOW'),
       },
       ended_at: {
         type: DataTypes.DATE,
