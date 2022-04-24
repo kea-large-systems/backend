@@ -1,9 +1,8 @@
-import { Model, DataTypes } from "sequelize";
-import { sequelize_conf } from "../config/mysql";
+import { Model, DataTypes, Sequelize } from "sequelize";
 
 class Role extends Model {}
 
-const initializedRole = Role.init(
+const roleInit = (sequelize: Sequelize) => Role.init(
   {
     role_id: {
       type: DataTypes.INTEGER,
@@ -16,9 +15,9 @@ const initializedRole = Role.init(
     },
   },
   {
-    sequelize: sequelize_conf,
+    sequelize,
     modelName: "roles",
   }
 );
 
-export { Role, initializedRole };
+export { Role, roleInit };

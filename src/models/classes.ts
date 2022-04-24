@@ -1,32 +1,33 @@
-import { Model, DataTypes } from "sequelize";
-import { sequelize_conf } from "../config/mysql";
+import { Model, DataTypes, Sequelize } from "sequelize";
 import { User } from "./users";
 
 class Class extends Model {}
 
-const initializedClass = Class.init(
-  {
-    class_id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+const classInit = (sequelize: Sequelize) => {
+  Class.init(
+    {
+      class_id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      name: {
+        type: DataTypes.STRING(45),
+        allowNull: false,
+      },
     },
-    name: {
-      type: DataTypes.STRING(45),
-      allowNull: false,
+    {
+      sequelize,
+      modelName: "classes",
+    }
+  );
+
+  User.hasMany(Class, {
+    foreignKey: {
+      name: "teacherUserId",
+      field: "teacher_user_id",
     },
-  },
-  {
-    sequelize: sequelize_conf,
-    modelName: "classes",
-  }
-);
+  });
+};
 
-User.hasMany(Class, {
-  foreignKey: {
-    name: "teacherUserId",
-    field: "teacher_user_id",
-  },
-});
-
-export { Class, initializedClass };
+export { Class, classInit };

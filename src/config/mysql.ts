@@ -1,13 +1,16 @@
 import { Sequelize } from "sequelize";
 
+// Define the constants
+const DATABASE = process.env.DATABASE || "";
+const USERNAME = process.env.USERNAME || "";
+const PASSWORD = process.env.PASSWORD || "";
+const HOST = process.env.HOST || "";
+
 // sequelize connection to mysql
-export const sequelize_conf = new Sequelize(
-  `${process.env.DATABASE}`,
-  `${process.env.USERNAME}`,
-  `${process.env.PASSWORD}`,
-  {
-    host: `${process.env.HOST}`,
-    dialect: "mysql",
-    logging: false,
-  }
-);
+const sequelize = new Sequelize(DATABASE, USERNAME, PASSWORD, {
+  host: HOST,
+  dialect: "mysql",
+  logging: false,
+});
+
+export { sequelize };
