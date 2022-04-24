@@ -52,7 +52,7 @@ const syncModels = async (sequelize: Sequelize | null) => {
       classInit(sequelize);
       lectureInit(sequelize);
 
-      await sequelize.sync({ alter: true });
+      await sequelize.sync({ force: true });
       console.log("Database synced successfully ");
     } catch (e) {
       console.error(`Something went wrong while synchronizing the DB : ${e}`);
