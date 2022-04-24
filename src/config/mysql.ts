@@ -8,6 +8,6 @@ export const sequelize_conf = new Sequelize(
   {
     host: `${process.env.HOST}`,
     dialect: "mysql",
-    logging: false
+    logging: false,
   }
 );

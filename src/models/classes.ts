@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
-import { sequelize_conf } from "../../config/mysql";
-import { User } from "../users/users";
+import { sequelize_conf } from "../config/mysql";
+import { User } from "./users";
 
 class Class extends Model {}
 

@@ -1,6 +1,6 @@
-import { Class } from "./classes/classes";
-import { Role } from "./roles/roles";
-import { User } from "./users/users";
+import { Class } from "./classes";
+import { Role } from "./roles";
+import { User } from "./users";
 
 
 /**

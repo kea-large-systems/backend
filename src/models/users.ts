@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
-import { sequelize_conf } from "../../config/mysql";
-import { Role } from "../roles/roles";
+import { sequelize_conf } from "../config/mysql";
+import { Role } from "./roles";
 
 class User extends Model {}
 
@@ -34,7 +34,7 @@ Role.hasMany(User, {
   foreignKey: {
     name: "roleId",
     field: "role_id",
-  }
+  },
 });
 
 export { User, initializedUser };
