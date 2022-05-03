@@ -2,7 +2,7 @@
 import express from "express";
 import "dotenv/config";
 import { sequelize } from "./config/mysql";
-import { loadDB } from "./config/model-loader";
+import { loadDB } from "./utils/model-loader";
 
 const port = process.env.APP_PORT || 5000;
 
@@ -22,6 +22,5 @@ app.all("*", (_req, res) => {
 
 // Server setup
 app.listen(port, () => {
-  console.log(`TypeScript with Express
-         Running on port: ${port}`);
+  console.log(`TypeScript with Express \n\t running on port: ${port}`);
 });

@@ -1,4 +1,4 @@
-import { Model, DataTypes, Sequelize, NOW } from "sequelize";
+import { Model, DataTypes, Sequelize } from "sequelize";
 import { Lecture } from "./lectures";
 import { User } from "./users";
 
@@ -7,15 +7,17 @@ class Attendance extends Model {}
 const attendanceInit = (sequelize: Sequelize) => {
   Attendance.init(
     {
-      attendance_id: {
+      attendanceId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+        field: "attendance_id",
       },
-      attended_at: {
+      attendedAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('NOW'),
+        defaultValue: Sequelize.fn("NOW"),
+        field: "attended_at",
       },
     },
     {
@@ -23,20 +25,24 @@ const attendanceInit = (sequelize: Sequelize) => {
       tableName: "attendances",
     }
   );
+};
 
-  Lecture.hasMany(Attendance, {
+const attendanceAssociationInit = () => {
+  Attendance.belongsTo(Lecture, {
     foreignKey: {
-      name: "lecture_id",
+      name: "lectureId",
       allowNull: false,
+      field: "lecture_id",
     },
   });
 
-  User.hasMany(Attendance, {
+  Attendance.belongsTo(User, {
     foreignKey: {
-      name: "user_id",
+      name: "userId",
       allowNull: false,
+      field: "user_id",
     },
   });
 };
 
-export { Attendance, attendanceInit };
+export { Attendance, attendanceInit, attendanceAssociationInit };

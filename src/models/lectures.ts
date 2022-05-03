@@ -1,4 +1,5 @@
-import { NOW, Model, DataTypes, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize } from "sequelize";
+import { Attendance } from "./attendances";
 import { Class } from "./classes";
 
 class Lecture extends Model {}
@@ -6,22 +7,25 @@ class Lecture extends Model {}
 const lectureInit = (sequelize: Sequelize) => {
   Lecture.init(
     {
-      role_id: {
+      lectureId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+        field: "lecture_id",
       },
       name: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
-      started_at: {
+      startedAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('NOW'),
+        defaultValue: Sequelize.fn("NOW"),
+        field: "started_at",
       },
-      ended_at: {
+      endedAt: {
         type: DataTypes.DATE,
+        field: "ended_at",
       },
     },
     {
@@ -29,13 +33,24 @@ const lectureInit = (sequelize: Sequelize) => {
       tableName: "lectures",
     }
   );
+};
 
-  Class.hasMany(Lecture, {
+const lectureAssociationInit = () => {
+  Lecture.belongsTo(Class, {
     foreignKey: {
-      name: "class_id",
+      name: "classId",
       allowNull: false,
+      field: "class_id",
+    },
+  });
+
+  Lecture.hasMany(Attendance, {
+    foreignKey: {
+      name: "lectureId",
+      allowNull: false,
+      field: "lecture_id",
     },
   });
 };
 
-export { Lecture, lectureInit };
+export { Lecture, lectureInit, lectureAssociationInit };

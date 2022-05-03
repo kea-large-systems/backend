@@ -1,15 +1,17 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import { User } from "./users";
+import { Lecture } from "./lectures";
 
 class Class extends Model {}
 
 const classInit = (sequelize: Sequelize) => {
   Class.init(
     {
-      class_id: {
+      classId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+        field: "class_id",
       },
       name: {
         type: DataTypes.STRING(45),
@@ -21,12 +23,24 @@ const classInit = (sequelize: Sequelize) => {
       tableName: "classes",
     }
   );
+};
 
-  User.hasMany(Class, {
+const classAssociationInit = () => {
+  Class.hasMany(Lecture, {
     foreignKey: {
-      name: "teacher_user_id",
+      name: "classId",
+      allowNull: false,
+      field: "class_id",
+    },
+  });
+
+  Class.belongsTo(User, {
+    foreignKey: {
+      name: "teacherUserId",
+      allowNull: false,
+      field: "teacher_user_id",
     },
   });
 };
 
-export { Class, classInit };
+export { Class, classInit, classAssociationInit };

@@ -1,10 +1,10 @@
 import { Sequelize } from "sequelize";
-import { userInit } from "../models/users";
-import { classInit } from "../models/classes";
-import { roleInit } from "../models/roles";
+import { userAssociationInit, userInit } from "../models/users";
+import { classAssociationInit, classInit } from "../models/classes";
+import { roleAssociationInit, roleInit } from "../models/roles";
 import { exit } from "process";
-import { lectureInit } from "../models/lectures";
-import { attendanceInit } from "../models/attendances";
+import { lectureAssociationInit, lectureInit } from "../models/lectures";
+import { attendanceAssociationInit, attendanceInit } from "../models/attendances";
 
 /**
  * Creates or updates tables in the schema defined in the ENV `DATABASE`
@@ -48,11 +48,9 @@ const syncModels = async (sequelize: Sequelize | null) => {
   if (sequelize) {
     try {
       console.log("Attempting to sync the models to the database...");
-      roleInit(sequelize);
-      userInit(sequelize);
-      classInit(sequelize);
-      lectureInit(sequelize);
-      attendanceInit(sequelize);
+
+      loadModels(sequelize);
+      loadAssociations();
 
       await sequelize.sync({ force: true });
       console.log("Database synced successfully ");
@@ -65,6 +63,32 @@ const syncModels = async (sequelize: Sequelize | null) => {
     console.log("Skipping sync, db not connected");
     exit(1);
   }
+};
+
+/**
+ * Initializes the models into sequelize
+ * @param sequelize - Initialized sequelize instance
+ */
+const loadModels = (sequelize: Sequelize) => {
+  roleInit(sequelize);
+  userInit(sequelize);
+  classInit(sequelize);
+  lectureInit(sequelize);
+  attendanceInit(sequelize);
+};
+
+/**
+ * Initializes the associations of the models in sequelize.
+ *
+ * Must be done after loading the models, or it fails as it does
+ * not know about the models to which it needs to associate
+ */
+const loadAssociations = () => {
+  roleAssociationInit();
+  userAssociationInit();
+  classAssociationInit();
+  lectureAssociationInit();
+  attendanceAssociationInit();
 };
 
 export { loadDB };

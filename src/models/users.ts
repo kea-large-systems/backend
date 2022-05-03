@@ -1,4 +1,6 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
+import { Attendance } from "./attendances";
+import { Class } from "./classes";
 import { Role } from "./roles";
 
 class User extends Model {}
@@ -6,10 +8,11 @@ class User extends Model {}
 const userInit = (sequelize: Sequelize) => {
   User.init(
     {
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+        field: "user_id",
       },
       name: {
         type: DataTypes.STRING,
@@ -29,13 +32,32 @@ const userInit = (sequelize: Sequelize) => {
       tableName: "users",
     }
   );
+};
 
-  Role.hasMany(User, {
+const userAssociationInit = () => {
+  User.belongsTo(Role, {
     foreignKey: {
-      name: "role_id",
+      name: "roleId",
       allowNull: false,
+      field: "role_id",
+    },
+  });
+
+  User.hasMany(Class, {
+    foreignKey: {
+      name: "teacherUserId",
+      allowNull: false,
+      field: "teacher_user_id",
+    },
+  });
+
+  User.hasMany(Attendance, {
+    foreignKey: {
+      name: "userId",
+      allowNull: false,
+      field: "user_id",
     },
   });
 };
 
-export { User, userInit };
+export { User, userInit, userAssociationInit };
