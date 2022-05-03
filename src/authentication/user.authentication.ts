@@ -1,14 +1,9 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, Express } from "express";
 import passport from "passport";
 
-// Didn't work to have it in the global file.
-declare global {
-  namespace Express {
-    interface User {
-      username: string;
-      id?: number;
-    }
-  }
+// TOOD: Move to the user class that Alex created that is connected to the db
+class User {
+  declare id?: number;
 }
 
 /**
@@ -48,8 +43,10 @@ export const userAuthentication = {
    * - Saves user.id in client cookie
    */
   serialize: (): void => {
-    passport.serializeUser((user, done) => {
-      done(null, user.id);
+    passport.serializeUser((user: User, done) => {
+      console.log(user);
+      // HERE 
+      done(null, user);
     });
   },
   /**

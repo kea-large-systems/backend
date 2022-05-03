@@ -6,9 +6,8 @@ import passport from 'passport'
 import session from 'express-session';
 
 import { passportSetup } from "./authentication/passportSetup";
-
 import { authenticationRoutes } from "./routes/authentication.routes";
-
+import { sessionConfig } from "./config";
 
 
 const port = process.env.APP_PORT || 5000;
@@ -18,12 +17,7 @@ const app: express.Application = express();
 
 // Always use a helmet (Security reasons: https://expressjs.com/en/advanced/best-practice-security.html)
 app.use(helmet());
-app.use(session({
-  secret: 'roll-call-legendary-app', // salt, make session id's harder to crack, value can be anything
-  resave: false,  // need to look further into it, "... Typically, you'll want false"
-  saveUninitialized: true, // Forces session that is uninitialized to be saved to the store.
-  cookie: {secure: false} // recommended true, but requires https for cookie save, can be based on env
-}))
+app.use(session(sessionConfig))
 
 // ________________________________ PASSPORT CONFIG ________________________________
 // Don't change the order of the passport config calls
@@ -48,6 +42,5 @@ app.all("*", (_req, res) => {
 
 // Server setup
 app.listen(port, () => {
-  console.log(`TypeScript with Express
-         Running on port: ${port}`);
+  console.log(`TypeScript with Express \n\t Running on port: ${port}`);
 });

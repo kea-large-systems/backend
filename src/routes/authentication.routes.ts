@@ -37,5 +37,5 @@ authenticationRoutes.get('/logout', isAuthenticated, (req, res) => {
 
 // Testing that the authentication works: 
 authenticationRoutes.get('/super-secret', isAuthenticated, (req, res) => {
-  res.send(`<h3>Super secret things on this page, you are authenticated</h3> <br> <h4>user: ${req.user}</h4>`);
+  res.send(`<h3>Super secret things on this page, you are authenticated</h3> <br> <h4>user: ${JSON.stringify(req.user)}</h4>`);
 })

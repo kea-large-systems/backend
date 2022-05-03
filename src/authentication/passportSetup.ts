@@ -1,14 +1,8 @@
 import passport from "passport";
+import { microsoftPassportConfig } from "../config";
 import { microsoftUser, userAuthentication } from "./user.authentication";
 
 var MicrosoftStrategy = require('passport-microsoft').Strategy;
-
-const microsoftPassportConfig = {
-  clientID: process.env.MICROSOFT_CLIENT_ID,
-  clientSecret: process.env.MICROSOFT_CLIENT_SECRET,
-  callbackURL: process.env.MICROSOFT_CALL_BACK_URL,
-  scope: [process.env.MICROSOFT_SCOPE]
-}
 
 /**
  * Passport 'Init' functions for the application

@@ -108,6 +108,7 @@ package-lock.json
 
 # Config
 config.js
+env-config.ts
 
 # Astthors txt notes
 www-astthor-notes.txt
