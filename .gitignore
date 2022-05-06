@@ -105,6 +105,8 @@ dist
 
 # USER IGNORES
 package-lock.json
+build/
+*.code-workspace
 
 # Config
 config.js
