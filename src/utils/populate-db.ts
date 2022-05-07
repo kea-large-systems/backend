@@ -1,4 +1,8 @@
+import { Attendance } from "../models/attendances";
+import { Class } from "../models/classes";
+import { Lecture } from "../models/lectures";
 import { Role } from "../models/roles";
+import { Subject } from "../models/subjects";
 import { User } from "../models/users";
 
 export const populateRole = async () => {
@@ -57,4 +61,71 @@ export const populateUser = async () => {
   await teacher1.save();
   await teacher2.save();
   await teacher3.save();
+}
+
+/**
+ * Order that they need to be in.
+ * - Role
+ * - User : using FK of role
+ * - Class
+ * - Subject : using FK of Teacher user and FK of Class
+ * - Lecture : using FK of Subject
+ * - Attendance : using FK of User and FK of Lecture 
+ */
+
+export const populateClasses = async () => {
+  const class1 = Class.build({
+    name: 'class1'
+  });
+  const class2 = Class.build({
+    name: 'class2'
+  });
+  await class1.save();
+  await class2.save();
+}
+
+export const populateSubjects = async () => {
+  const teacher1 = await User.findOne({where: {roleId: 2}});
+  const class1 = await Class.findOne({where: {name: 'class1'}});
+
+  const subject1 = Subject.build({
+    name: 'subject1',
+    teacherUserId: teacher1?.userId,
+    classId: class1?.classId,
+  });
+
+  const subject2 = Subject.build({
+    name: 'subject2',
+    teacherUserId: teacher1?.userId,
+    classId: class1?.classId
+  });
+
+  await subject1.save();
+  await subject2.save();
+}
+
+export const populateLectures = async () => {
+  const subject1 = await Subject.findOne({where: {name: 'subject1'}});
+  
+  const lecture1 = Lecture.build({
+    name: 'lecture1',
+    startedAt: '2022-05-07T13:38:34.000Z',
+    endedAt: '2022-05-07T13:38:34.000Z',
+    subjectId: subject1?.subjectId,
+  });
+
+  await lecture1.save();
+}
+
+export const populateAttendances = async () => {
+  const user1 = await User.findOne({where: {roleId: 1}});
+  const lecture1 = await Lecture.findOne({where: {name: 'lecture1'}});
+
+  const attendance1 = Attendance.build({
+    attendedAt: '2022-05-07T13:38:34.000Z',
+    userId: user1?.userId,
+    lectureId: lecture1?.lectureId,
+  });
+
+  await attendance1.save();
 }

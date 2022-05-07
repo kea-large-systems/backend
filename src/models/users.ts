@@ -1,6 +1,6 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import { Attendance } from "./attendances";
-import { Class } from "./classes";
+import { Subject } from "./subjects";
 import { Role } from "./roles";
 
 class User extends Model {
@@ -42,7 +42,7 @@ const userAssociationInit = () => {
     },
   });
 
-  User.hasMany(Class, {
+  User.hasMany(Subject, {
     foreignKey: {
       name: "teacherUserId",
       allowNull: false,

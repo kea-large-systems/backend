@@ -1,8 +1,10 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
-import { User } from "./users";
-import { Lecture } from "./lectures";
+import { Subject } from "./subjects";
 
-class Class extends Model {}
+
+class Class extends Model {
+  declare classId: number;
+}
 
 const classInit = (sequelize: Sequelize) => {
   Class.init(
@@ -26,21 +28,13 @@ const classInit = (sequelize: Sequelize) => {
 };
 
 const classAssociationInit = () => {
-  Class.hasMany(Lecture, {
+  Class.hasMany(Subject, {
     foreignKey: {
       name: "classId",
       allowNull: false,
       field: "class_id",
     },
   });
-
-  Class.belongsTo(User, {
-    foreignKey: {
-      name: "teacherUserId",
-      allowNull: false,
-      field: "teacher_user_id",
-    },
-  });
 };
 
-export { Class, classInit, classAssociationInit };
+export { Class as Class, classInit as classInit, classAssociationInit as classAssociationInit };
