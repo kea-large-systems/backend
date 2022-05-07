@@ -17,6 +17,7 @@ const roleInit = (sequelize: Sequelize) => {
       name: {
         type: DataTypes.ENUM("student", "teacher"),
         allowNull: false,
+        unique: true
       },
     },
     {
