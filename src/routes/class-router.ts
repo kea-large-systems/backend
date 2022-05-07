@@ -4,17 +4,17 @@ import { ModelService } from "../services/model-service";
 import { responseHandler } from "../utils/response-handler";
 
 const router = express.Router();
-const ClassesService = new ModelService(Class);
+const ClassService = new ModelService(Class);
 
 router.get("/", async (_req, res) => {
-  const response = await ClassesService.findAll();
+  const response = await ClassService.findAll();
   responseHandler("Classes", response, res);
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const response = await ClassesService.findByPk(id);
+  const response = await ClassService.findByPk(id);
   responseHandler("Classes", response, res);
 });
 
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
   const requestObject = filterBody(req.body);
   const newUser = Class.build(requestObject);
 
-  const response = await ClassesService.save(newUser);
+  const response = await ClassService.save(newUser);
   responseHandler("Classes", response, res);
 });
 
@@ -30,14 +30,14 @@ router.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const requestObject = filterBody(req.body);
 
-  const response = await ClassesService.update(id, requestObject);
+  const response = await ClassService.update(id, requestObject);
   responseHandler("Classes", response, res);
 });
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const response = await ClassesService.delete(id);
+  const response = await ClassService.delete(id);
   responseHandler("Classes", response, res);
 });
 
@@ -56,4 +56,4 @@ const filterBody = (body: {
   return { classId, name, teatcherUserId };
 };
 
-export { router as ClassesRouter };
+export { router as ClassRouter };

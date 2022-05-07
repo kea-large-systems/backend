@@ -4,7 +4,7 @@ import "dotenv/config";
 import { sequelize } from "./config/mysql";
 import { loadDB } from "./utils/model-loader";
 import { UserRouter } from "./routes/user-router"
-import { ClassesRouter } from "./routes/class-router";
+import { ClassRouter } from "./routes/class-router";
 
 const port = process.env.APP_PORT || 5000;
 
@@ -19,7 +19,7 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/users", UserRouter);
-app.use("/classes", ClassesRouter);
+app.use("/classes", ClassRouter);
 
 app.all("*", (_req, res) => {
   res.send({ error: 404, message: "not found" });
