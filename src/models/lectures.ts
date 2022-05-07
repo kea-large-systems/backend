@@ -20,11 +20,12 @@ const lectureInit = (sequelize: Sequelize) => {
       startedAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn("NOW"),
+        defaultValue: Sequelize.literal("NOW()"),
         field: "started_at",
       },
       endedAt: {
         type: DataTypes.DATE,
+        defaultValue: Sequelize.literal("(NOW() + interval 90 minute)"), 
         field: "ended_at",
       },
     },
