@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import { isAuthenticated } from "../authentication/user.authentication";
+import { populateRole, populateUser } from "../utils/populate-db";
 
 const router = Router();
 // ------------------------------------------------
@@ -18,6 +19,8 @@ router.get('/login-failed', (_req, res) => {
 })
 
 router.get('/login', async (_req, res) => {
+  await populateRole();
+  await populateUser();
   res.send();
 })
 

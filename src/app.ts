@@ -7,7 +7,7 @@ import helmet from 'helmet'
 import passport from 'passport'
 import session from 'express-session';
 import { passportSetup } from "./authentication/passportSetup";
-import { AuthenticationRouter } from "./routes/authentication.routes";
+import { AuthenticationRouter } from "./routes/authentication-router";
 import { sessionConfig } from "./config/config";
 
 import { UserRouter } from "./routes/user-router"
