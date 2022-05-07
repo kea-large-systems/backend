@@ -1,44 +1,43 @@
 import express from "express";
 import { Subject } from "../models/subjects";
-import { ModelService } from "../services/model-service";
+import { GenericSubjectService } from "../utils/generic-service-initializer";
 import { responseHandler } from "../utils/response-handler";
 
 const router = express.Router();
-const SubjectService = new ModelService(Subject);
 
 router.get("/", async (_req, res) => {
-  const response = await SubjectService.findAll();
+  const response = await GenericSubjectService.findAll();
   responseHandler("Subjects", response, res);
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const response = await SubjectService.findByPk(id);
-  responseHandler("Subjects", response, res);
+  const response = await GenericSubjectService.findByPk(id);
+  responseHandler("Subject", response, res);
 });
 
 router.post("/", async (req, res) => {
   const requestObject = filterBody(req.body);
-  const newUser = Subject.build(requestObject);
+  const newSubject = Subject.build(requestObject);
 
-  const response = await SubjectService.save(newUser);
-  responseHandler("Subjects", response, res);
+  const response = await GenericSubjectService.save(newSubject);
+  responseHandler("Subject", response, res);
 });
 
 router.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const requestObject = filterBody(req.body);
 
-  const response = await SubjectService.update(id, requestObject);
-  responseHandler("Subjects", response, res);
+  const response = await GenericSubjectService.update(id, requestObject);
+  responseHandler("Subject", response, res);
 });
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const response = await SubjectService.delete(id);
-  responseHandler("Subjects", response, res);
+  const response = await GenericSubjectService.delete(id);
+  responseHandler("Subject", response, res);
 });
 
 /**
@@ -49,9 +48,10 @@ router.delete("/:id", async (req, res) => {
 const filterBody = (body: {
   name: any;
   teatcherUserId: any;
+  classId: any;
 }) => {
-  const { name, teatcherUserId } = body;
-  return { name, teatcherUserId };
+  const { name, teatcherUserId, classId} = body;
+  return { name, teatcherUserId, classId };
 };
 
 export { router as SubjectRouter };
