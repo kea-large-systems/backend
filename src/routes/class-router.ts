@@ -47,13 +47,11 @@ router.delete("/:id", async (req, res) => {
  * @returns Object containing all needed user attributes
  */
 const filterBody = (body: {
-  classId: any;
   name: any;
   teatcherUserId: any;
-  roleId: any;
 }) => {
-  const { classId, name, teatcherUserId } = body;
-  return { classId, name, teatcherUserId };
+  const { name, teatcherUserId } = body;
+  return { name, teatcherUserId };
 };
 
 export { router as ClassRouter };
