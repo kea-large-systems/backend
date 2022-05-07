@@ -27,4 +27,5 @@ router.get('/logout', isAuthenticated, (req, res) => {
   res.redirect('/auth/login');
 });
 
+
 export {router as AuthenticationRouter}
