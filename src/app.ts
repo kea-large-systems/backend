@@ -6,7 +6,7 @@ import { loadDB } from "./utils/model-loader";
 import { UserRouter } from "./routes/user-router"
 import { ClassesRouter } from "./routes/class-router";
 
-const port = process.env.APP_PORT || 5100;
+const port = process.env.APP_PORT || 5000;
 
 // Initialize the express engine
 const app: express.Application = express();
