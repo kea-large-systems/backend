@@ -1,7 +1,9 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import { User } from "./users";
 
-class Role extends Model {}
+class Role extends Model {
+  declare roleId: number;
+}
 
 const roleInit = (sequelize: Sequelize) => {
   Role.init(
