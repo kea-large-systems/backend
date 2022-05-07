@@ -1,7 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
 import { isAuthenticated } from "../authentication/user.authentication";
-import { populateAttendances, populateClasses, populateLectures, populateRole, populateSubjects, populateUser } from "../utils/populate-db";
 
 const router = Router();
 // ------------------------------------------------

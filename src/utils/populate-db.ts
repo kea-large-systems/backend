@@ -5,6 +5,16 @@ import { Role } from "../models/roles";
 import { Subject } from "../models/subjects";
 import { User } from "../models/users";
 
+/**
+ * Order that they need to be in.
+ * - Role
+ * - User : using FK of role
+ * - Class
+ * - Subject : using FK of Teacher user and FK of Class
+ * - Lecture : using FK of Subject
+ * - Attendance : using FK of User and FK of Lecture 
+ */
+
 export const populateRole = async () => {
   const studentRole = Role.build({
     name: "student"
@@ -62,16 +72,6 @@ export const populateUser = async () => {
   await teacher2.save();
   await teacher3.save();
 }
-
-/**
- * Order that they need to be in.
- * - Role
- * - User : using FK of role
- * - Class
- * - Subject : using FK of Teacher user and FK of Class
- * - Lecture : using FK of Subject
- * - Attendance : using FK of User and FK of Lecture 
- */
 
 export const populateClasses = async () => {
   const class1 = Class.build({
