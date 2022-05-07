@@ -1,10 +1,7 @@
-import { Request, Response, NextFunction, Express } from "express";
+import { Request, Response, NextFunction } from "express";
 import passport from "passport";
-
-// TOOD: Move to the user class that Alex created that is connected to the db
-class User {
-  declare id?: number;
-}
+import { Role } from "../models/roles";
+import { User } from "../models/users";
 
 /**
  * Checks if user is authenticated
@@ -26,11 +23,28 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
  * @param profile user profile from microsoft
  * @param done 
  * @returns confirmation to microsoft that it was successful or that we got an error
- * -- NOT FULLY IMPLEMENTED (need to connect to DB)
  */
-export const microsoftUser = (_accessToken: any, _refreshToken: any, profile: any, done: any) => {
-  // Here we need implement logic of finding or saving user from/to db 
-  return done(null, profile);    
+export const microsoftUser = async (_accessToken: any, _refreshToken: any, profile: any, done: any) => {
+
+  const email = profile._json.mail;
+  const roleName = getRoleName(email);
+
+  // If not valid, sends null values back, which will fail the login
+  if(roleName === 'not-valid'){done(null, null)}
+  
+  const user = await User.findOne({where: {email: email}});
+  const role = await Role.findOne({where: {name: roleName}});
+  if(user) {
+    done(null, user);
+  } else {
+    const newUser = User.build({
+      name: profile.displayName,
+      email: email,
+      roleId: role?.roleId
+    });
+    const savedUser = await newUser.save();      
+    done(null, savedUser);
+  }
 }
 
 /**
@@ -43,22 +57,36 @@ export const userAuthentication = {
    * - Saves user.id in client cookie
    */
   serialize: (): void => {
-    passport.serializeUser((user: User, done) => {
-      console.log(user);
-      // HERE 
-      done(null, user);
+    passport.serializeUser((user, done) => {
+      done(null, user.userId);
     });
   },
   /**
    * Called in every request from the client
    * - passes cookie with user.id
    * - checks if user exists in our database
-   * -- NOT FULLY IMPLEMENTED (Need to connect with DB)
    */
   deserialize: (): void => {
-    passport.deserializeUser((id: Express.User, done) => {
-      // TODO: Implement getUserFromDatabaseFunction here, and nest done within it
-      done(null, id); //pass in user obj from db once implemented, it's checking based on true/false
+    passport.deserializeUser(async (id: any, done) => {
+      const user = await User.findByPk(id);
+      done(null, user);
     });
+  }
+}
+
+/**
+ * Checks that the email address is valid : teacher or student.
+ * @param email email we get from the third party auth service
+ * @returns student, or teacher, or not-valid
+ */
+function getRoleName(email: string){
+  const suffix = email.split('@')[1];
+  switch(suffix) {
+    case 'stud.kea.dk':
+      return 'student';
+    case 'kea.dk':
+      return 'teacher';
+    default:
+      return 'not-valid';
   }
 }

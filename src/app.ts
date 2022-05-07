@@ -6,11 +6,9 @@ import { loadDB } from "./utils/model-loader";
 import helmet from 'helmet'
 import passport from 'passport'
 import session from 'express-session';
-
 import { passportSetup } from "./authentication/passportSetup";
-import { authenticationRoutes } from "./routes/authentication.routes";
-import { sessionConfig } from "./config";
-
+import { AuthenticationRouter } from "./routes/authentication.routes";
+import { sessionConfig } from "./config/config";
 
 const port = process.env.APP_PORT || 5000;
 
@@ -31,14 +29,14 @@ passportSetup.microsoftStrategySetup();
 passportSetup.serialization();
 // __________________________________________________________________________________
 
+
 // Handling '/' Request
 app.get("/", (_req, res) => {
   res.send({ message: "Live and running typescript, baby" });
 });
 
-app.all("*", (_req, res) => {
 // app.use Routes
-app.use('/auth', authenticationRoutes);
+app.use('/auth', AuthenticationRouter);
 
 
 app.all("*", (_req, res) => {
@@ -49,3 +47,4 @@ app.all("*", (_req, res) => {
 app.listen(port, () => {
   console.log(`TypeScript with Express \n\t running on port: ${port}`);
 });
+

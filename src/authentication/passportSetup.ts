@@ -1,5 +1,5 @@
 import passport from "passport";
-import { microsoftPassportConfig } from "../config";
+import { microsoftPassportConfig } from "../config/config";
 import { microsoftUser, userAuthentication } from "./user.authentication";
 
 var MicrosoftStrategy = require('passport-microsoft').Strategy;
