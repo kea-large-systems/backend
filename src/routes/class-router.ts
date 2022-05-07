@@ -44,7 +44,7 @@ router.delete("/:id", async (req, res) => {
 /**
  *
  * @param body Request body
- * @returns Object containing all needed user attributes
+ * @returns Object containing all needed class attributes
  */
 const filterBody = (body: {
   name: any;
