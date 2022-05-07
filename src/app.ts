@@ -7,6 +7,7 @@ import { loadDB } from "./utils/model-loader";
 import { UserRouter } from "./routes/user-router"
 import { ClassRouter } from "./routes/class-router";
 import { RoleRouter } from "./routes/role-router";
+import { AttendanceRouter } from "./routes/attendance-router";
 
 const port = process.env.APP_PORT || 5000;
 
@@ -23,6 +24,7 @@ app.get("/", (_req, res) => {
 app.use("/users", UserRouter);
 app.use("/classes", ClassRouter);
 app.use("/roles", RoleRouter);
+app.use("/attendances", AttendanceRouter);
 
 app.all("*", (_req, res) => {
   res.send({ error: 404, message: "not found" });

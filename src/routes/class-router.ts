@@ -20,9 +20,9 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const requestObject = filterBody(req.body);
-  const newUser = Class.build(requestObject);
+  const newClass = Class.build(requestObject);
 
-  const response = await ClassService.save(newUser);
+  const response = await ClassService.save(newClass);
   responseHandler("Classes", response, res);
 });
 
