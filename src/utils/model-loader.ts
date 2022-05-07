@@ -1,10 +1,11 @@
 import { Sequelize } from "sequelize";
 import { userAssociationInit, userInit } from "../models/users";
-import { classAssociationInit, classInit } from "../models/classes";
+import { subjectAssociationInit, subjectInit } from "../models/subjects";
 import { roleAssociationInit, roleInit } from "../models/roles";
 import { exit } from "process";
 import { lectureAssociationInit, lectureInit } from "../models/lectures";
 import { attendanceAssociationInit, attendanceInit } from "../models/attendances";
+import { classAssociationInit, classInit } from "../models/classes";
 
 /**
  * Creates or updates tables in the schema defined in the ENV `DATABASE`
@@ -73,6 +74,7 @@ const loadModels = (sequelize: Sequelize) => {
   roleInit(sequelize);
   userInit(sequelize);
   classInit(sequelize);
+  subjectInit(sequelize);
   lectureInit(sequelize);
   attendanceInit(sequelize);
 };
@@ -87,6 +89,7 @@ const loadAssociations = () => {
   roleAssociationInit();
   userAssociationInit();
   classAssociationInit();
+  subjectAssociationInit();
   lectureAssociationInit();
   attendanceAssociationInit();
 };
