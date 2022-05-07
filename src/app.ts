@@ -13,6 +13,7 @@ import { sessionConfig } from "./config/config";
 import { UserRouter } from "./routes/user-router"
 import { SubjectRouter } from "./routes/subject-router";
 import { RoleRouter } from "./routes/role-router";
+import { LectureRouter } from "./routes/lecture-router";
 import { ClassCodeRouter } from "./routes/class-code-router";
 
 const port = process.env.APP_PORT || 5000;
@@ -43,11 +44,11 @@ app.get("/", (_req, res) => {
 app.use("/users", UserRouter);
 app.use("/subjects", SubjectRouter);
 app.use("/roles", RoleRouter);
+app.use("/lectures", LectureRouter);
 app.use("/class-codes", ClassCodeRouter);
 
 // app.use Routes
 app.use('/auth', AuthenticationRouter);
-
 
 app.all("*", (_req, res) => {
   res.send({ error: 404, message: "not found" });
