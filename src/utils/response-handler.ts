@@ -21,6 +21,6 @@ export const responseHandler = async (
     case StatusCode.ServerError:
       return res
         .status(500)
-        .send({ error: 500, message: `Unable to retrieve ${name}.` });
+        .send({ error: 500, message: `Internal server error` });
   }
 };
