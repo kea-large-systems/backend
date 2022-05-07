@@ -1,3 +1,6 @@
+import { CustomResponse } from "../utils/custom-response";
+import { StatusCode as sc } from "../utils/status-code";
+
 /**
  * Generic Service class for our models to do handle errors and logic
  */
@@ -7,57 +10,72 @@ class ModelService<T> {
    */
   constructor(protected model: any) {}
 
-  async findAll() {
+  async findAll(): Promise<CustomResponse<T>> {
     try {
-      return await this.model.findAll();
+      const foundModels = await this.model.findAll();
+      return { statusCode: sc.Success, model: foundModels };
     } catch (error) {
       console.error(error);
-      return [];
+      return { statusCode: sc.ServerError };
     }
   }
 
-  async findByPk(id: string): Promise<any | null> {
+  async findByPk(id: string): Promise<CustomResponse<T>> {
     try {
-      return await this.model.findByPk(id);
+      const foundUser = await this.model.findByPk(id);
+      if (foundUser) {
+        return { statusCode: sc.Success, model: foundUser };
+      } else {
+        return { statusCode: sc.NotFound };
+      }
     } catch (error) {
       console.error(error);
-      return null;
+      return { statusCode: sc.ServerError };
     }
   }
 
-  async save(object: any): Promise<any | null> {
+  async save(object: any): Promise<CustomResponse<T>> {
     try {
-      return object.save();
+      const savedModel = await object.save();
+      return { statusCode: sc.Created, model: savedModel };
     } catch (error) {
       console.error(error);
-      return null;
+      return { statusCode: sc.ServerError };
     }
   }
 
-  async update(id: string, newAttributes: any) {
+  async update(id: string, newAttributes: any): Promise<CustomResponse<T>> {
     try {
       const modelToUpdate = await this.model.findByPk(id);
       if (modelToUpdate) {
-        const updatedModel = await modelToUpdate.update(newAttributes);
-        return updatedModel;
+        try {
+          const updatedModel = await modelToUpdate.update(newAttributes);
+          return { statusCode: sc.Success, model: updatedModel };
+        } catch (error) {
+          return { statusCode: sc.InvalidData };
+        }
+      } else {
+        return { statusCode: sc.NotFound };
       }
     } catch (error) {
-      return null;
+      console.error(error);
+      return { statusCode: sc.ServerError };
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<CustomResponse<T>> {
     try {
       const modelToDelete = await this.model.findByPk(id);
-      
+
       if (modelToDelete) {
         modelToDelete.destroy();
-        return true;
+        return { statusCode: sc.NoContent };
       } else {
-        return false;
+        return { statusCode: sc.NotFound };
       }
     } catch (error) {
-      return false; 
+      console.error(error);
+      return { statusCode: sc.ServerError };
     }
   }
 }
