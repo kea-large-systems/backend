@@ -1,20 +1,19 @@
 import express from "express";
 import { Role } from "../models/roles";
-import { ModelService } from "../services/model-service";
 import { responseHandler } from "../utils/response-handler";
+import { GenericRoleService } from "../utils/generic-service-initializer";
 
 const router = express.Router();
-const RoleService = new ModelService(Role);
 
 router.get("/", async (_req, res) => {
-  const response = await RoleService.findAll();
+  const response = await GenericRoleService.findAll();
   responseHandler("Roles", response, res);
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const response = await RoleService.findByPk(id);
+  const response = await GenericRoleService.findByPk(id);
   responseHandler("Role", response, res);
 });
 
@@ -22,7 +21,7 @@ router.post("/", async (req, res) => {
   const requestObject = filterBody(req.body);
   const newRole = Role.build(requestObject);
 
-  const response = await RoleService.save(newRole);
+  const response = await GenericRoleService.save(newRole);
   responseHandler("Role", response, res);
 });
 
@@ -30,14 +29,14 @@ router.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const requestObject = filterBody(req.body);
 
-  const response = await RoleService.update(id, requestObject);
+  const response = await GenericRoleService.update(id, requestObject);
   responseHandler("Role", response, res);
 });
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const response = await RoleService.delete(id);
+  const response = await GenericRoleService.delete(id);
   responseHandler("Role", response, res);
 });
 
