@@ -1,8 +1,6 @@
 import { Role } from "../models/roles";
 import { User } from "../models/users";
 
-
-
 export const populateRole = async () => {
   const studentRole = Role.build({
     name: "student"
@@ -14,9 +12,7 @@ export const populateRole = async () => {
   const teacherRole = Role.build({
     name: "teacher"
   });
-  await teacherRole.save();
-
-  
+  await teacherRole.save();  
 }
 
 export const populateUser = async () => {

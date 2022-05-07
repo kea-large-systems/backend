@@ -1,7 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
 import { isAuthenticated } from "../authentication/user.authentication";
-import { populateRole, populateUser } from "../utils/populate-db";
 
 const router = Router();
 // ------------------------------------------------
@@ -15,13 +14,8 @@ router.get('/microsoft', passport.authenticate('microsoft', {
 }));
 
 router.get('/login-failed', (_req, res) => {
-  res.send();
-})
-
-router.get('/login', async (_req, res) => {
-  await populateRole();
-  await populateUser();
-  res.send();
+  res.statusCode = 403
+  res.send({error: 'Forbidden'});
 })
 
 // login/microsoft
