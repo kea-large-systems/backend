@@ -19,9 +19,7 @@ export const populateRole = async () => {
   const studentRole = Role.build({
     name: "student"
   });
-  console.log('after building');
   await studentRole.save();
-  console.log('after saving');
   
   const teacherRole = Role.build({
     name: "teacher"
