@@ -39,6 +39,7 @@ router.get("/login/success", async (req, res) => {
     res.redirect(
       `${process.env.FRONTEND_APP}/login/success/?statuscode=${StatusCode.Success}&${searchParams}`
     );
+    return
   }
   res.redirect(
     `${process.env.FRONTEND_APP}/login/failed/?statuscode=${StatusCode.NotFound}`

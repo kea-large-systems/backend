@@ -41,7 +41,7 @@ export const teacherGuard = (
   next: NextFunction
 ) => {
   if (req.isAuthenticated()) {
-    if (req.user?.roleId === TEACHER_ROLE_ID) {
+    if ((req.user?.roleId).toString() === TEACHER_ROLE_ID) {
       return next();
     } else {
       return res.status(403).send({ status: 403, message: "Not authorized" });
