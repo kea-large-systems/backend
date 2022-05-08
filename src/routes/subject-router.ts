@@ -3,7 +3,7 @@ import { Subject } from "../models/subjects";
 import { GenericSubjectService } from "../utils/generic-service-initializer";
 import { responseHandler } from "../utils/response-handler";
 import { SubjectService } from "../services/subject-service";
-import { teacherGuard } from "../authentication/user.authentication";
+import { teacherGuard } from "../authentication/user-authentication";
 
 const subjectService = new SubjectService(Subject);
 

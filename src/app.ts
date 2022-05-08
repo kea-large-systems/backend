@@ -6,9 +6,9 @@ import { loadDB } from "./utils/model-loader";
 import helmet from "helmet";
 import passport from "passport";
 import session from "express-session";
-import { passportSetup } from "./authentication/passportSetup";
+import { passportSetup } from "./config/passport-setup";
 import { AuthenticationRouter } from "./routes/authentication-router";
-import { sessionConfig } from "./config/config";
+import { sessionConfig } from "./config/constants";
 
 import { UserRouter } from "./routes/user-router";
 import { SubjectRouter } from "./routes/subject-router";
@@ -17,9 +17,9 @@ import { LectureRouter } from "./routes/lecture-router";
 import { ClassCodeRouter } from "./routes/class-code-router";
 import { AttendanceRouter } from "./routes/attendance-router";
 import { ClassRouter } from "./routes/class-router";
-import { teacherGuard } from "./authentication/user.authentication";
+import { isAuthenticated } from "./authentication/user-authentication";
 
-const port = process.env.APP_PORT || 5000;
+const port = process.env.APP_PORT || 4200;
 
 // Initialize the express engine
 const app: express.Application = express();
@@ -46,7 +46,7 @@ app.get("/", async (_req, res) => {
 // Routes
 
 app.use("/auth", AuthenticationRouter);
-// app.use(isAuthenticated);
+app.use(isAuthenticated);
 
 // Mixed Guards
 app.use("/subjects", SubjectRouter);

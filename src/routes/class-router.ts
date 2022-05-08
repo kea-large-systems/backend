@@ -1,5 +1,5 @@
 import express from "express";
-import { teacherGuard } from "../authentication/user.authentication";
+import { teacherGuard } from "../authentication/user-authentication";
 import { Class } from "../models/classes";
 import { GenericClassService } from "../utils/generic-service-initializer";
 import { responseHandler } from "../utils/response-handler";

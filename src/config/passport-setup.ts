@@ -1,8 +1,8 @@
 import passport from "passport";
-import { microsoftPassportConfig } from "../config/config";
-import { microsoftUser, userAuthentication } from "./user.authentication";
+import { microsoftPassportConfig } from "./constants";
+import { microsoftUser, userAuthentication } from "../authentication/user-authentication";
 
-var MicrosoftStrategy = require('passport-microsoft').Strategy;
+let MicrosoftStrategy = require("passport-microsoft").Strategy;
 
 /**
  * Passport 'Init' functions for the application
@@ -17,5 +17,5 @@ export const passportSetup = {
   serialization: (): void => {
     userAuthentication.serialize();
     userAuthentication.deserialize();
-  }
-}
+  },
+};

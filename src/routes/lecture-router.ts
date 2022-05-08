@@ -1,5 +1,5 @@
 import express from "express";
-import { teacherGuard } from "../authentication/user.authentication";
+import { teacherGuard } from "../authentication/user-authentication";
 import { Lecture } from "../models/lectures";
 import { ModelService } from "../services/model-service";
 import { responseHandler } from "../utils/response-handler";

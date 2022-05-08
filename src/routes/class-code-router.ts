@@ -1,5 +1,5 @@
 import Express from "express";
-import { teacherGuard } from "../authentication/user.authentication";
+import { teacherGuard } from "../authentication/user-authentication";
 import { ClassCodeService } from "../services/class-code-service";
 
 const router = Express.Router();

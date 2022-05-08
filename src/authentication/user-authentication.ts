@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import passport from "passport";
-import { STUDENT_ROLE_ID, TEACHER_ROLE_ID } from "../config/config";
+import { STUDENT_ROLE_ID, TEACHER_ROLE_ID } from "../config/constants";
 import { Role } from "../models/roles";
 import { User } from "../models/users";
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
-import { isAuthenticated } from "../authentication/user.authentication";
+import { isAuthenticated } from "../authentication/user-authentication";
 import { Role } from "../models/roles";
 import { GenericRoleService } from "../utils/generic-service-initializer";
 import { StatusCode } from "../utils/status-code";

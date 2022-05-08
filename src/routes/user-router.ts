@@ -2,7 +2,7 @@ import express from "express";
 import { User } from "../models/users";
 import { responseHandler } from "../utils/response-handler";
 import { GenericUserService } from "../utils/generic-service-initializer";
-import { teacherGuard } from "../authentication/user.authentication";
+import { teacherGuard } from "../authentication/user-authentication";
 
 const router = express.Router();
 

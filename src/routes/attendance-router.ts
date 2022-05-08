@@ -2,7 +2,7 @@ import express from "express";
 import { Attendance } from "../models/attendances";
 import { responseHandler } from "../utils/response-handler";
 import { GenericAttendanceService } from "../utils/generic-service-initializer";
-import { teacherGuard } from "../authentication/user.authentication";
+import { teacherGuard } from "../authentication/user-authentication";
 
 const router = express.Router();
 

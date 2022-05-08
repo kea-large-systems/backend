@@ -1,4 +1,3 @@
-import { readFileSync } from "fs";
 import { Sequelize } from "sequelize";
 
 // Define the constants
