@@ -12,6 +12,9 @@ class SubjectService<T> {
                     teacherUserId: teacherId
                 },
             });
+            if (foundSubjects.length === 0) {
+                return { statusCode: sc.NotFound };
+            }
             return { statusCode: sc.Success, model: foundSubjects };
         } catch (error) {
             console.error(error);
