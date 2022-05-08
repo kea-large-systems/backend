@@ -8,7 +8,7 @@ const AttendanceService = new ModelService(Attendance);
 
 router.get("/", async (_req, res) => {
   const response = await AttendanceService.findAll();
-  responseHandler("UAttendance", response, res);
+  responseHandler("Attendance", response, res);
 });
 
 router.get("/:id", async (req, res) => {
@@ -49,10 +49,10 @@ router.delete("/:id", async (req, res) => {
 const filterBody = (body: {
   userId: any;
   lectureId: any;
-  attendanceAt: any;
+  attendedAt: any;
 }) => {
-  const { userId, lectureId, attendanceAt } = body;
-  return { userId, lectureId, attendanceAt };
+  const { userId, lectureId, attendedAt } = body;
+  return { userId, lectureId, attendedAt };
 };
 
 export { router as AttendanceRouter };
