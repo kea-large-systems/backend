@@ -15,10 +15,10 @@ const router = Router();
 // Authentication/Authorization route for microsoft (Our users don't navigate to this endpoint)
 router.get('/microsoft', passport.authenticate('microsoft', {
   successRedirect: '/auth/login/success',
-  failureRedirect: '/auth/login-failed'
+  failureRedirect: '/auth/login/failed'
 }));
 
-router.get('/login-failed', (_req, res) => {
+router.get('/login/failed', (_req, res) => {
   res.statusCode = 403
   res.send({error: 'Forbidden'});
 });
