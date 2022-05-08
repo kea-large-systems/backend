@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import { networkInterfaces } from "os";
 import passport from "passport";
+import { STUDENT_ROLE_ID, TEACHER_ROLE_ID } from "../config/config";
 import { Role } from "../models/roles";
 import { User } from "../models/users";
 
@@ -14,6 +16,20 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
   }
   res.redirect('/auth/login');
 };
+
+export const studentGuard = (req: Request, res: Response, next: NextFunction) => {
+  if(req.isAuthenticated() && req.user?.roleId === STUDENT_ROLE_ID){
+    return next();
+  }
+  res.redirect('/'); // TODO: change to frontend login page
+}
+
+export const teacherGuard = (req: Request, res: Response, next: NextFunction) => {
+  if(req.isAuthenticated() && req.user?.roleId === TEACHER_ROLE_ID){
+    return next();
+  }
+  res.redirect('/'); // TODO: change to frontend login page
+}
 
 /**
  * Microsoft sends us user details during the authentication process

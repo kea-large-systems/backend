@@ -5,7 +5,6 @@ import { Role } from "../models/roles";
 import { GenericRoleService } from "../utils/generic-service-initializer";
 import { StatusCode } from "../utils/status-code";
 import { CustomResponse } from "../utils/custom-response";
-import { responseHandler } from "../utils/response-handler";
 
 const router = Router();
 // ------------------------------------------------

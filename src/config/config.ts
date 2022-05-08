@@ -4,6 +4,9 @@ declare global {
   }
 }
 
+export let TEACHER_ROLE_ID = '1';
+export let STUDENT_ROLE_ID = '2';
+
 /**
  * Session Configurations
  */
