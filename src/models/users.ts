@@ -1,9 +1,11 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import { Attendance } from "./attendances";
-import { Class } from "./classes";
+import { Subject } from "./subjects";
 import { Role } from "./roles";
 
-class User extends Model {}
+class User extends Model {
+  declare userId?: number;
+}
 
 const userInit = (sequelize: Sequelize) => {
   User.init(
@@ -21,10 +23,7 @@ const userInit = (sequelize: Sequelize) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      password: {
-        type: DataTypes.CHAR(50),
-        allowNull: false,
+        unique: true
       },
     },
     {
@@ -43,7 +42,7 @@ const userAssociationInit = () => {
     },
   });
 
-  User.hasMany(Class, {
+  User.hasMany(Subject, {
     foreignKey: {
       name: "teacherUserId",
       allowNull: false,

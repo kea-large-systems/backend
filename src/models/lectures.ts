@@ -1,8 +1,10 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import { Attendance } from "./attendances";
-import { Class } from "./classes";
+import { Subject } from "./subjects";
 
-class Lecture extends Model {}
+class Lecture extends Model {
+  declare lectureId: number;
+}
 
 const lectureInit = (sequelize: Sequelize) => {
   Lecture.init(
@@ -20,11 +22,12 @@ const lectureInit = (sequelize: Sequelize) => {
       startedAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn("NOW"),
+        defaultValue: Sequelize.literal("NOW()"),
         field: "started_at",
       },
       endedAt: {
         type: DataTypes.DATE,
+        defaultValue: Sequelize.literal("(NOW() + interval 90 minute)"), 
         field: "ended_at",
       },
     },
@@ -36,11 +39,11 @@ const lectureInit = (sequelize: Sequelize) => {
 };
 
 const lectureAssociationInit = () => {
-  Lecture.belongsTo(Class, {
+  Lecture.belongsTo(Subject, {
     foreignKey: {
-      name: "classId",
+      name: "subjectId",
       allowNull: false,
-      field: "class_id",
+      field: "subject_id",
     },
   });
 
