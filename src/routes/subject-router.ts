@@ -1,6 +1,6 @@
-import express from "express";
+import express, { response } from "express";
 import { Subject } from "../models/subjects";
-import { GenericSubjectService } from "../utils/generic-service-initializer";
+import { GenericSubjectService, SubjectsService } from "../utils/generic-service-initializer";
 import { responseHandler } from "../utils/response-handler";
 
 const router = express.Router();
@@ -39,6 +39,13 @@ router.delete("/:id", async (req, res) => {
   const response = await GenericSubjectService.delete(id);
   responseHandler("Subject", response, res);
 });
+
+router.get("/by-teacher/:teacherId", async (req, res) => {
+  const { teacherId } = req.params;
+
+  const response = await SubjectsService.findByTeacherId(teacherId);
+  responseHandler("Subject", response, res);
+})
 
 /**
  *
