@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 import { Subject } from "../models/subjects";
 import { GenericSubjectService, SubjectsService } from "../utils/generic-service-initializer";
 import { responseHandler } from "../utils/response-handler";
