@@ -1,6 +1,6 @@
 declare global {
   namespace Express {
-    interface User {userId?: number, name?: string, email?: string, roleId?: string}
+    interface User {userId: string, name: string, email: string, roleId: string}
   }
 }
 
