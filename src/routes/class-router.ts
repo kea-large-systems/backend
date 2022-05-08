@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", async (_req, res) => {
   const response = await GenericClassService.findAll();
-  responseHandler("Class", response, res);
+  responseHandler("Classes", response, res);
 });
 
 router.get("/:id", async (req, res) => {

@@ -1,20 +1,19 @@
 import express from "express";
 import { Attendance } from "../models/attendances";
-import { ModelService } from "../services/model-service";
 import { responseHandler } from "../utils/response-handler";
+import { GenericAttendanceService } from "../utils/generic-service-initializer";
 
 const router = express.Router();
-const AttendanceService = new ModelService(Attendance);
 
 router.get("/", async (_req, res) => {
-  const response = await AttendanceService.findAll();
+  const response = await GenericAttendanceService.findAll();
   responseHandler("Attendance", response, res);
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const response = await AttendanceService.findByPk(id);
+  const response = await GenericAttendanceService.findByPk(id);
   responseHandler("Attendance", response, res);
 });
 
@@ -22,7 +21,7 @@ router.post("/", async (req, res) => {
   const requestObject = filterBody(req.body);
   const newAttendance = Attendance.build(requestObject);
 
-  const response = await AttendanceService.save(newAttendance);
+  const response = await GenericAttendanceService.save(newAttendance);
   responseHandler("Attendance", response, res);
 });
 
@@ -30,14 +29,14 @@ router.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const requestObject = filterBody(req.body);
 
-  const response = await AttendanceService.update(id, requestObject);
+  const response = await GenericAttendanceService.update(id, requestObject);
   responseHandler("Attendance", response, res);
 });
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const response = await AttendanceService.delete(id);
+  const response = await GenericAttendanceService.delete(id);
   responseHandler("Attendance", response, res);
 });
 
