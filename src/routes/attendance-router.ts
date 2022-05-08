@@ -2,8 +2,15 @@ import express from "express";
 import { Attendance } from "../models/attendances";
 import { responseHandler } from "../utils/response-handler";
 import { GenericAttendanceService } from "../utils/generic-service-initializer";
+import { teacherGuard } from "../authentication/user.authentication";
 
 const router = express.Router();
+
+// TODO - StudentSelfGuard here
+
+// TODO - GET "/by-student/:studentId"
+
+router.use(teacherGuard);
 
 router.get("/", async (_req, res) => {
   const response = await GenericAttendanceService.findAll();
@@ -45,11 +52,7 @@ router.delete("/:id", async (req, res) => {
  * @param body Request body
  * @returns Object containing all needed Attendance attributes
  */
-const filterBody = (body: {
-  userId: any;
-  lectureId: any;
-  attendedAt: any;
-}) => {
+const filterBody = (body: { userId: any; lectureId: any; attendedAt: any }) => {
   const { userId, lectureId, attendedAt } = body;
   return { userId, lectureId, attendedAt };
 };

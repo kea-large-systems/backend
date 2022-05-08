@@ -2,19 +2,24 @@ import express from "express";
 import { User } from "../models/users";
 import { responseHandler } from "../utils/response-handler";
 import { GenericUserService } from "../utils/generic-service-initializer";
+import { teacherGuard } from "../authentication/user.authentication";
 
 const router = express.Router();
 
-router.get("/", async (_req, res) => {
-  const response = await GenericUserService.findAll();
-  responseHandler("Users", response, res);
-});
+// TODO - StudentSelfGuard here
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   const response = await GenericUserService.findByPk(id);
   responseHandler("User", response, res);
+});
+
+router.use(teacherGuard);
+
+router.get("/", async (_req, res) => {
+  const response = await GenericUserService.findAll();
+  responseHandler("Users", response, res);
 });
 
 router.post("/", async (req, res) => {

@@ -1,10 +1,17 @@
 import express from "express";
+import { teacherGuard } from "../authentication/user.authentication";
 import { Lecture } from "../models/lectures";
 import { ModelService } from "../services/model-service";
 import { responseHandler } from "../utils/response-handler";
 
 const router = express.Router();
 const LectureService = new ModelService(Lecture);
+
+// TODO - StudentSelfGuard here
+
+// TODO - GET "/by-student/:studentId"
+
+router.use(teacherGuard);
 
 router.get("/", async (_req, res) => {
   const response = await LectureService.findAll();
@@ -17,6 +24,8 @@ router.get("/:id", async (req, res) => {
   const response = await LectureService.findByPk(id);
   responseHandler("Lecture", response, res);
 });
+
+// TODO - GET "/by-teacher/:teacherId"
 
 router.post("/", async (req, res) => {
   if (!req.body.name) {

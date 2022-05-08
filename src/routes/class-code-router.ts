@@ -1,7 +1,19 @@
 import Express from "express";
+import { teacherGuard } from "../authentication/user.authentication";
 import { ClassCodeService } from "../services/class-code-service";
 
 const router = Express.Router();
+
+router.get("/attend/:code", async (req, res) => {
+  const { code } = req.params;
+  const userId = req.user!.userId;
+
+  const status = ClassCodeService.validateCode(code);
+
+  ClassCodeService.markAttendance(status, userId, res);
+});
+
+router.use(teacherGuard);
 
 router.get("/:lectureId", (req, res) => {
   const { lectureId } = req.params;
@@ -9,15 +21,6 @@ router.get("/:lectureId", (req, res) => {
   const code = ClassCodeService.generateCode(lectureId);
 
   res.send({ code });
-});
-
-router.get("/attend/:code", async (req, res) => {
-  const { code } = req.params;
-  const userId = req.body.userId;
-
-  const status = ClassCodeService.validateCode(code);
-
-  ClassCodeService.markAttendance(status, userId, res);
 });
 
 router.delete("/:lectureId", (req, res) => {

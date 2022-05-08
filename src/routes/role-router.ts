@@ -2,8 +2,11 @@ import express from "express";
 import { Role } from "../models/roles";
 import { responseHandler } from "../utils/response-handler";
 import { GenericRoleService } from "../utils/generic-service-initializer";
+import { teacherGuard } from "../authentication/user.authentication";
 
 const router = express.Router();
+
+router.use(teacherGuard);
 
 router.get("/", async (_req, res) => {
   const response = await GenericRoleService.findAll();
@@ -45,9 +48,7 @@ router.delete("/:id", async (req, res) => {
  * @param body Request body
  * @returns Object containing all needed user attributes
  */
-const filterBody = (body: {
-  name: any;
-}) => {
+const filterBody = (body: { name: any }) => {
   const { name } = body;
   return { name };
 };
