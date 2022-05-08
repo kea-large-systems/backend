@@ -3,6 +3,7 @@ import { User } from "./users";
 
 class Role extends Model {
   declare roleId: number;
+  declare name: string;
 }
 
 const roleInit = (sequelize: Sequelize) => {
