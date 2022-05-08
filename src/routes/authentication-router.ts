@@ -2,7 +2,10 @@ import { Router } from "express";
 import passport from "passport";
 import { isAuthenticated } from "../authentication/user.authentication";
 import { Role } from "../models/roles";
-import { populateAttendances, populateClasses, populateLectures, populateRole, populateSubjects, populateUser } from "../utils/populate-db";
+import { GenericRoleService } from "../utils/generic-service-initializer";
+import { StatusCode } from "../utils/status-code";
+import { CustomResponse } from "../utils/custom-response";
+import { responseHandler } from "../utils/response-handler";
 
 const router = Router();
 // ------------------------------------------------
@@ -21,14 +24,20 @@ router.get('/login-failed', (_req, res) => {
 });
 
 router.get('/login/success', async (req, res) => {
-  const role = await Role.findByPk(req.user?.roleId);
-  const response = {
-    userId: req.user?.userId,
-    name: req.user?.name,
-    email: req.user?.email,
-    roleName: role?.getDataValue('name'),
+  const roleId = req.user?.roleId;
+  const roleResponse = await GenericRoleService.findByPk(roleId!) as CustomResponse<Role>
+  if(roleResponse.statusCode === StatusCode.Success){
+    const userResponse = {
+      userId: req.user?.userId,
+      name: req.user?.name,
+      email: req.user?.email,
+      roleName: roleResponse.model?.name,
+    }
+
+    responseHandler("User", {statusCode: StatusCode.Success, model: userResponse}, res);
   }
-  res.json({user: response});
+  
+  responseHandler("User", {statusCode: StatusCode.NotFound, model: {}}, res);
 })
 
 // login/microsoft
