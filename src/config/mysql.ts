@@ -1,3 +1,4 @@
+import { readFileSync } from "fs";
 import { Sequelize } from "sequelize";
 
 // Define the constants
@@ -15,5 +16,6 @@ const sequelize = new Sequelize(DATABASE, USERNAME, PASSWORD, {
     timestamps: false,
   },
 });
+
 
 export { sequelize };
