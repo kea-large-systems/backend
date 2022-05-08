@@ -1,6 +1,11 @@
 import { Router } from "express";
 import passport from "passport";
 import { isAuthenticated } from "../authentication/user.authentication";
+import { Role } from "../models/roles";
+import { GenericRoleService } from "../utils/generic-service-initializer";
+import { StatusCode } from "../utils/status-code";
+import { CustomResponse } from "../utils/custom-response";
+import { responseHandler } from "../utils/response-handler";
 
 const router = Router();
 // ------------------------------------------------
@@ -9,13 +14,30 @@ const router = Router();
 
 // Authentication/Authorization route for microsoft (Our users don't navigate to this endpoint)
 router.get('/microsoft', passport.authenticate('microsoft', {
-  successRedirect: '/',
-  failureRedirect: '/auth/login-failed'
+  successRedirect: '/auth/login/success',
+  failureRedirect: '/auth/login/failed'
 }));
 
-router.get('/login-failed', (_req, res) => {
+router.get('/login/failed', (_req, res) => {
   res.statusCode = 403
   res.send({error: 'Forbidden'});
+});
+
+router.get('/login/success', async (req, res) => {
+  const roleId = req.user?.roleId;
+  const roleResponse = await GenericRoleService.findByPk(roleId!) as CustomResponse<Role>
+  if(roleResponse.statusCode === StatusCode.Success){
+    const userResponse = {
+      userId: req.user?.userId,
+      name: req.user?.name,
+      email: req.user?.email,
+      roleName: roleResponse.model?.name,
+    }
+
+    responseHandler("User", {statusCode: StatusCode.Success, model: userResponse}, res);
+  }
+  
+  responseHandler("User", {statusCode: StatusCode.NotFound, model: {}}, res);
 })
 
 // login/microsoft
@@ -26,6 +48,5 @@ router.get('/logout', isAuthenticated, (req, res) => {
   req.logout();
   res.redirect('/auth/login');
 });
-
 
 export {router as AuthenticationRouter}

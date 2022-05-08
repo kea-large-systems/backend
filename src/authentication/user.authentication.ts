@@ -63,12 +63,26 @@ export const userAuthentication = {
   },
   /**
    * Called in every request from the client
-   * - passes cookie with user.id
+   * - gets id extracted from express session and passes it to this function 
    * - checks if user exists in our database
+   * - - if so, creates new user object saved as req.user
+   * - - - Fields: userId, name, email, roleName
+   * - - if not, uses null value in done method : unvalid user
    */
   deserialize: (): void => {
     passport.deserializeUser(async (id: any, done) => {
       const user = await User.findByPk(id);
+      if(user){
+        const sessionUser = {
+          userId: user?.getDataValue('userId'),
+          name: user?.getDataValue('name'),
+          email: user?.getDataValue('email'),
+          roleId: user?.getDataValue('roleId'),
+        }
+
+        done(null, sessionUser);
+        return;
+      }
       done(null, user);
     });
   }
