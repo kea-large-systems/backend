@@ -35,10 +35,8 @@ router.get('/login/success', async (req, res) => {
     }
     const searchParams = new URLSearchParams(userResponse).toString();
     res.redirect(`${process.env.FRONTEND_APP}/login/success/?statuscode=${StatusCode.Success}&${searchParams}`)
-    responseHandler("User", {statusCode: StatusCode.Success, model: userResponse}, res);
   }
   res.redirect(`${process.env.FRONTEND_APP}/login/failed/?statuscode=${StatusCode.NotFound}`);
-  responseHandler("User", {statusCode: StatusCode.NotFound, model: {}}, res);
 })
 
 // login/microsoft
