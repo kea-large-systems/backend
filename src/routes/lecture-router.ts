@@ -19,7 +19,11 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  if (!req.body.name) {
+    req.body.name = `lecture_${req.body.subjectId}`;
+  }
   const requestObject = filterBody(req.body);
+
   const newLecture = Lecture.build(requestObject);
 
   const response = await LectureService.save(newLecture);
@@ -53,7 +57,7 @@ const filterBody = (body: {
   subjectId: any;
 }) => {
   const { name, endedAt, startedAt, subjectId } = body;
-  return { name, endedAt, startedAt,  subjectId };
+  return { name, endedAt, startedAt, subjectId };
 };
 
 export { router as LectureRouter };
