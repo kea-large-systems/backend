@@ -52,4 +52,4 @@ const filterBody = (body: {
   return { name };
 };
 
-export { router as SubjectRouter };
+export { router as ClassRouter };
