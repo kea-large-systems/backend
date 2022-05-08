@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import { userAssociationInit, userInit } from "../models/users";
 import { subjectAssociationInit, subjectInit } from "../models/subjects";
-import { roleAssociationInit, roleInit } from "../models/roles";
+import { Role, roleAssociationInit, roleInit } from "../models/roles";
 import { exit } from "process";
 import { lectureAssociationInit, lectureInit } from "../models/lectures";
 import {
@@ -60,7 +60,7 @@ const syncModels = async (sequelize: Sequelize | null) => {
       loadModels(sequelize);
       loadAssociations();
 
-      await sequelize.sync({ force: true }).then(() => {
+      await sequelize.sync({ force: true }).then( async () => {
         populateDb(sequelize);
       });
       console.log("Database synced successfully ");

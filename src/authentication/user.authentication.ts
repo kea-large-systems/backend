@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { networkInterfaces } from "os";
 import passport from "passport";
 import { STUDENT_ROLE_ID, TEACHER_ROLE_ID } from "../config/config";
 import { Role } from "../models/roles";
@@ -18,17 +17,25 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
 };
 
 export const studentGuard = (req: Request, res: Response, next: NextFunction) => {
-  if(req.isAuthenticated() && req.user?.roleId === STUDENT_ROLE_ID){
-    return next();
-  }
-  res.redirect('/'); // TODO: change to frontend login page
+  if(req.isAuthenticated()){
+    if(req.user?.roleId === STUDENT_ROLE_ID){
+      return next();
+    } else {
+      // status code forbidden sent to frontend.
+    }
+  } 
+  res.redirect('/') // TODO: to frontpage login
 }
 
 export const teacherGuard = (req: Request, res: Response, next: NextFunction) => {
-  if(req.isAuthenticated() && req.user?.roleId === TEACHER_ROLE_ID){
-    return next();
-  }
-  res.redirect('/'); // TODO: change to frontend login page
+  if(req.isAuthenticated()){
+    if(req.user?.roleId === TEACHER_ROLE_ID){
+      return next();
+    } else {
+      // status code forbidden sent to frontend.
+    }
+  } 
+  res.redirect('/') // TODO: to frontpage login
 }
 
 /**

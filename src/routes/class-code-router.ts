@@ -1,8 +1,5 @@
 import Express from "express";
-import { Attendance } from "../models/attendances";
 import { ClassCodeService } from "../services/class-code-service";
-import { responseHandler } from "../utils/response-handler";
-import { StatusCode } from "../utils/status-code";
 
 const router = Express.Router();
 
