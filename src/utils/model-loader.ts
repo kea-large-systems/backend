@@ -4,8 +4,13 @@ import { subjectAssociationInit, subjectInit } from "../models/subjects";
 import { roleAssociationInit, roleInit } from "../models/roles";
 import { exit } from "process";
 import { lectureAssociationInit, lectureInit } from "../models/lectures";
-import { attendanceAssociationInit, attendanceInit } from "../models/attendances";
+import {
+  attendanceAssociationInit,
+  attendanceInit,
+} from "../models/attendances";
 import { classAssociationInit, classInit } from "../models/classes";
+import { readFileSync } from "fs";
+import path from "path";
 
 /**
  * Creates or updates tables in the schema defined in the ENV `DATABASE`
@@ -25,7 +30,9 @@ const loadDB = async (sequelize: Sequelize) => {
  *
  * @returns {Promise<Sequelize | null >}
  */
-const testDbConnection = async (sequelize: Sequelize): Promise<Sequelize | null> => {
+const testDbConnection = async (
+  sequelize: Sequelize
+): Promise<Sequelize | null> => {
   console.log("Attempting to connect to the database...");
   try {
     await sequelize.authenticate();
@@ -53,7 +60,9 @@ const syncModels = async (sequelize: Sequelize | null) => {
       loadModels(sequelize);
       loadAssociations();
 
-      await sequelize.sync({ alter: true });
+      await sequelize.sync({ force: true }).then(() => {
+        populateDb(sequelize);
+      });
       console.log("Database synced successfully ");
     } catch (e) {
       console.error(`Something went wrong while synchronizing the DB : ${e}`);
@@ -94,4 +103,18 @@ const loadAssociations = () => {
   attendanceAssociationInit();
 };
 
+const populateDb = (sequelize: Sequelize) => {
+  const pathToScript = path.resolve(
+    __dirname,
+    "../../docs/population-script.sql"
+  );
+
+  const populationScript = readFileSync(pathToScript, "utf-8");
+
+  populationScript.split("\n").forEach((line) => {
+    if (line.startsWith("INSERT")) {
+      sequelize.query(line);
+    }
+  });
+};
 export { loadDB };

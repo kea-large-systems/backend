@@ -17,7 +17,6 @@ import { LectureRouter } from "./routes/lecture-router";
 import { ClassCodeRouter } from "./routes/class-code-router";
 import { AttendanceRouter } from "./routes/attendance-router";
 import { ClassRouter } from "./routes/class-router";
-import { populateRole, populateUser, populateClasses, populateSubjects, populateLectures, populateAttendances } from "./utils/populate-db";
 
 const port = process.env.APP_PORT || 5000;
 
@@ -41,12 +40,6 @@ passportSetup.serialization();
 
 // Handling '/' Request
 app.get("/", async (_req, res) => {
-  await populateRole();
-  await populateUser();
-  await populateClasses();
-  await populateSubjects();
-  await populateLectures();
-  await populateAttendances();
   res.send({ message: "Live and running typescript, baby" });
 });
 
