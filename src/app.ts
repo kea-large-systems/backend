@@ -4,6 +4,7 @@ import "dotenv/config";
 import { sequelize } from "./config/mysql";
 import { loadDB } from "./utils/model-loader";
 import helmet from "helmet";
+import cors from "cors";
 import passport from "passport";
 import session from "express-session";
 import { passportSetup } from "./config/passport-setup";
@@ -23,6 +24,7 @@ const port = process.env.APP_PORT || 4200;
 
 // Initialize the express engine
 const app: express.Application = express();
+app.use(cors());
 app.use(json());
 loadDB(sequelize);
 
