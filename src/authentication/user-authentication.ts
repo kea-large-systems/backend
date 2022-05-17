@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
 import passport from "passport";
-import { STUDENT_ROLE_ID, TEACHER_ROLE_ID } from "../config/constants";
+import { Request, Response, NextFunction } from "express";
+import { TEACHER_ROLE_ID } from "../config/constants";
 import { Role } from "../models/roles";
 import { User } from "../models/users";
 
@@ -20,34 +20,16 @@ export const isAuthenticated = (
   res.status(403).send({ error: 403, message: "Not authorized" });
 };
 
-export const studentGuard = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  if (req.isAuthenticated()) {
-    if (req.user?.roleId === STUDENT_ROLE_ID) {
-      return next();
-    } else {
-      // status code forbidden sent to frontend.
-    }
-  }
-  res.redirect("/"); // TODO: to frontpage login
-};
-
 export const teacherGuard = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  if (req.isAuthenticated()) {
-    if ((req.user?.roleId).toString() === TEACHER_ROLE_ID) {
-      return next();
-    } else {
-      return res.status(403).send({ status: 403, message: "Not authorized" });
-    }
+  if((req.user?.roleId)?.toString() === TEACHER_ROLE_ID) {
+    return next();
+  } else {
+    return res.status(403).send({ status: 403, message: "Not authorized" });
   }
-  return res.status(403).send({ status: 403, message: "Not authorized" });
 };
 
 /**
