@@ -23,6 +23,8 @@ import { isAuthenticated } from "./authentication/user-authentication";
 const port = process.env.PORT || 4200;
 const frontendHost = process.env.FRONTEND_APP || "localhost:3000";
 
+console.log(frontendHost);
+
 // Initialize the express engine
 const app: express.Application = express();
 app.use(
