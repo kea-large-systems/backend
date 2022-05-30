@@ -4,9 +4,7 @@
   "description": "Backend system for large systems group work",
   "main": "src/app.ts",
   "scripts": {
-    "tsc": "npx tsc",
-    "postinstall": "npm run tsc",
-    "start": "npx tsc && node build/app.js",
+    "start": "npx ts-node ./src/app.ts",
     "dev": "nodemon ./src/app.ts",
     "test": "jest"
   },
