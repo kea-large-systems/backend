@@ -20,15 +20,17 @@ import { AttendanceRouter } from "./routes/attendance-router";
 import { ClassRouter } from "./routes/class-router";
 import { isAuthenticated } from "./authentication/user-authentication";
 
-
 const port = process.env.PORT || 4200;
+const frontendHost = process.env.FRONTEND_APP || "localhost:3000";
 
 // Initialize the express engine
 const app: express.Application = express();
-app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: frontendHost,
+    credentials: true,
+  })
+);
 app.use(json());
 loadDB(sequelize);
 
