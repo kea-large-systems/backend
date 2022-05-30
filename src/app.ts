@@ -27,12 +27,6 @@ console.log(frontendHost);
 
 // Initialize the express engine
 const app: express.Application = express();
-app.use(
-  cors({
-    origin: frontendHost,
-    credentials: true,
-  })
-);
 app.use(json());
 loadDB(sequelize);
 
