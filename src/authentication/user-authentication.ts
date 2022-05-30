@@ -26,7 +26,7 @@ export const teacherGuard = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", req.user?);
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", req.user);
   if((req.user?.roleId)?.toString() === TEACHER_ROLE_ID) {
     return next();
   } else {
