@@ -21,7 +21,7 @@ import { ClassRouter } from "./routes/class-router";
 import { isAuthenticated } from "./authentication/user-authentication";
 
 
-const port = process.env.APP_PORT || 4200;
+const port = process.env.PORT || 4200;
 
 // Initialize the express engine
 const app: express.Application = express();
