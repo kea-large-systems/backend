@@ -1,5 +1,69 @@
-import { Attendance } from "../attendances";
+// --------------------------------- Imports ----------------------------------
+import { sequelize } from "../../config/mysql";
+import { Attendance, attendanceAssociationInit, attendanceInit } from "../attendances";
+import { lectureInit } from "../lectures";
+import { userInit } from "../users";
 
-it("default test", () => {
-    expect(Attendance).not.toBeNull()
-})
+// ---------------------------- Partitions -----------------------------
+
+// TODO - REFACTOR TO USE BVA
+const validPartitions = [
+  ["1000-01-01 00:00"],
+  ["2021-12-24 23:59"],
+  ["9999-12-31 23:59"],
+];
+
+// TODO - REFACTOR TO USE BVA
+const invalidPartitions = [
+  ["999-01-01 00:00"],
+  ["0999-01-01 00:00"],
+  ["10000-01-01 00:00"],
+  ["2022-06-03 25:15"],
+  ["2022-13-15 12:24"],
+  ["2022-11-31 13:15"],  // there is no november 31
+  ["1678-1-01 13:24"],   // must have two digits for month 
+  ["1678-01-1 13:24"],   // must have two digits for day 
+  ["2022-07-11 1:12"],
+  ["2022-07-11 1:12"],
+  ["1997-12-30 10:60"],
+  [""],
+  ["look at me, i'm a date!"],
+  ["2022/06/03 20:44"]
+];
+
+// ----------------------------- Setup Functions ------------------------------
+
+beforeAll(() => {
+  attendanceInit(sequelize);
+  userInit(sequelize);
+  lectureInit(sequelize);
+  attendanceAssociationInit();
+});
+
+// ---------------------------------- Tests -----------------------------------
+
+it("should pass", () => {
+  expect(Attendance).not.toBeNull();
+});
+
+describe("Valid date partitions", () => {
+  it.each(validPartitions)("when the date is '%s'", async (date) => {
+    // Arrange
+    const testBody = { lectureId: 1, userId: 1, attendedAt: date };
+    // Act
+    const attendanceObject = Attendance.build(testBody);
+    // Assert
+    await expect(attendanceObject.validate()).resolves.not.toThrow();
+  });
+});
+
+describe("Invalid date partitions", () => {
+  it.each(invalidPartitions)("when the date is '%s'", async (date) => {
+    // Arrange
+    const testBody = { lectureId: 1, userId: 1, attendedAt: date };
+    // Act
+    const attendanceObject = Attendance.build(testBody);
+    // Assert
+    await expect(attendanceObject.validate()).rejects.toThrow();
+  });
+});
