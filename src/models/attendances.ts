@@ -1,5 +1,5 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
-import { stringDateTime, valiDate } from "../utils/input-validators";
+import { stringDateTime } from "../utils/input-validators";
 import { Lecture } from "./lectures";
 import { User } from "./users";
 
@@ -21,7 +21,7 @@ const attendanceInit = (sequelize: Sequelize) => {
         field: "attended_at",
         set(value) {
           this.setDataValue("attendedAt", stringDateTime(value));
-        }
+        },
       },
     },
     {

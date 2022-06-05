@@ -8,7 +8,7 @@ import {
 import { lectureInit } from "../lectures";
 import { userInit } from "../users";
 
-// ---------------------------- Partitions -----------------------------
+// ---------------------------- Test Cases -----------------------------
 
 // TODO - REFACTOR TO USE BVA
 const validPartitions = [
@@ -30,6 +30,7 @@ const invalidPartitions = [
   ["2022-07-11 1:12"],
   ["2022-07-11 1:12"],
   ["1997-12-30 10:60"],
+  ["1997-12-31 24:00"],
   [""],
   ["look at me, i'm a date!"],
   ["2022/06/03 20:44"],
@@ -44,11 +45,7 @@ const invalidPartitionsNumbers = [
 ];
 
 // TODO - REFACTOR TO USE BVA
-const invalidPartitionsObjects = [
-  [{ date: "2020-01-15 12:00" }],
-  [{}],
-  [null]
-];
+const invalidPartitionsObjects = [[{ date: "2020-01-15 12:00" }], [{}], [null]];
 
 // ----------------------------- Setup Functions ------------------------------
 
@@ -66,7 +63,7 @@ it("should pass", () => {
 });
 
 describe("Valid date partitions", () => {
-  it.each(validPartitions)("when the date is '%s'", async (date) => {
+  test.each(validPartitions)("when the date is '%s'", async (date) => {
     // Arrange
     const testBody = { lectureId: 1, userId: 1, attendedAt: date };
     // Act
@@ -77,7 +74,7 @@ describe("Valid date partitions", () => {
 });
 
 describe("Invalid date partitions - strings", () => {
-  it.each(invalidPartitions)("when the date is '%s'", async (date) => {
+  test.each(invalidPartitions)("when the date is '%s'", async (date) => {
     // Arrange
     const testBody = { lectureId: 1, userId: 1, attendedAt: date };
     // Act
@@ -88,7 +85,7 @@ describe("Invalid date partitions - strings", () => {
 });
 
 describe("Invalid date partitions - numbers", () => {
-  it.each(invalidPartitionsNumbers)("when the date is '%s'", async (date) => {
+  test.each(invalidPartitionsNumbers)("when the date is %s", async (date) => {
     // Arrange
     const testBody = { lectureId: 1, userId: 1, attendedAt: date };
     // Act

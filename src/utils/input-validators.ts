@@ -7,7 +7,7 @@ import moment from "moment";
  * @param date string with the date-time format 'YYYY-MM-DD HH:mm'
  * @returns { boolean }
  */
-export const valiDate = (date: string): boolean => {
+const valiDate = (date: string): boolean => {
   // validates the following format:
   // YYYY-MM-DD HH:mm
   // HH:mm MUST be within this range: (00:00 to 23:59)
