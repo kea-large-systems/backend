@@ -15,11 +15,17 @@ const statusAndResponses = [
 ];
 
 const statusAndNoResponse = [
-  { statusCode: StatusCode.Success, model: null },
-  { statusCode: StatusCode.Created, model: null },
+  { statusCode: StatusCode.Success },
+  { statusCode: StatusCode.Created },
+  { statusCode: StatusCode.NoContent }
 ];
 
-const noContentCondition = [{ statusCode: StatusCode.NoContent }];
+const statusWithBodyNoResponse = [
+  { statusCode: StatusCode.NoContent, model: "this is not used!" },
+  { statusCode: StatusCode.NotFound, model: "this is not used!" },
+  { statusCode: StatusCode.ServerError , model: "this is not used!"}
+];
+
 
 // ---------------------------------- Set-up ----------------------------------
 
@@ -53,32 +59,62 @@ describe("checks responses without messages", () => {
   test.each(statusAndNoResponse)("when the StatusCode is '%s'", async ({ statusCode }) => {
       // Arrange
       const res = mockResponse();
-      const customResult = { statusCode, model: null };
+      const customResult = { statusCode};
       const text = message;
 
       // Act
       responseHandler(text, customResult, res);
 
       // Assert
-      expect(res.send).toHaveBeenCalledWith(null);
+      expect(res.send).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(statusCode);
     }
   );
 });
 
-describe("checks no content without messages", () => {
-  test.each(noContentCondition)("when the StatusCode is '%s'", async ({ statusCode }) => {
-      // Arrange
-      const res = mockResponse();
-      const customResult = { statusCode, model: null };
-      const text = message;
+test("checks that model is correctly ignored", () => {
+   // Arrange
+  const res = mockResponse();
+  const { statusCode, model} = statusWithBodyNoResponse[0];
+  const customResult = { statusCode, model};
+  const text = message;
 
-      // Act
-      responseHandler(text, customResult, res);
+  // Act
+  responseHandler(text, customResult, res);
 
-      // Assert
-      expect(res.send).toHaveBeenCalledWith();
-      expect(res.status).toHaveBeenCalledWith(statusCode);
-    }
-  );
-});
+  // Assert
+  expect(res.send).toHaveBeenCalledWith();
+  expect(res.status).toHaveBeenCalledWith(statusCode);
+})
+
+test("checks that model is correctly ignored", () => {
+   // Arrange
+  const res = mockResponse();
+  const { statusCode, model} = statusWithBodyNoResponse[1];
+  const customResult = { statusCode, model};
+  const correctResponse = { error: 404, message: `${message} not found.` };
+  const text = message;
+
+  // Act
+  responseHandler(text, customResult, res);
+
+  // Assert
+  expect(res.send).toHaveBeenCalledWith(correctResponse);
+  expect(res.status).toHaveBeenCalledWith(statusCode);
+})
+
+test("checks that model is correctly ignored", () => {
+   // Arrange
+  const res = mockResponse();
+  const { statusCode, model} = statusWithBodyNoResponse[2];
+  const customResult = { statusCode, model};
+  const correctResponse = { error: 500, message: "Internal server error" };
+  const text = message;
+
+  // Act
+  responseHandler(text, customResult, res);
+
+  // Assert
+  expect(res.send).toHaveBeenCalledWith(correctResponse);
+  expect(res.status).toHaveBeenCalledWith(statusCode);
+})
