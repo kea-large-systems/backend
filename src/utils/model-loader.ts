@@ -18,7 +18,8 @@ import path from "path";
  * The schema MUST exist ahead of time or this will throw an error.
  */
 const loadDB = async (sequelize: Sequelize) => {
-  testDbConnection(sequelize).then(syncModels);
+  const a = await testDbConnection(sequelize)
+  return syncModels(a);
 };
 
 /**
