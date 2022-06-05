@@ -1,4 +1,4 @@
-import { stringDateTime } from "../input-validators";
+import { stringDateTime } from "../../src/utils/input-validators";
 // ---------------------------- Test Cases -----------------------------
 const validPartitions = [
   ["1000-01-01 00:00"],
