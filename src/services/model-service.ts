@@ -1,5 +1,5 @@
 import { CustomResponse } from "../utils/custom-response";
-import { StatusCode as sc, StatusCode } from "../utils/status-code";
+import { StatusCode } from "../utils/status-code";
 
 /**
  * Generic Service class for our models to do handle errors and logic
@@ -13,10 +13,10 @@ class ModelService<T> {
   async findAll(): Promise<CustomResponse<StatusCode, T>> {
     try {
       const foundModels = await this.model.findAll();
-      return { statusCode: sc.Success, model: foundModels };
+      return { statusCode: StatusCode.Success, model: foundModels };
     } catch (error) {
       console.error(error);
-      return { statusCode: sc.ServerError };
+      return { statusCode: StatusCode.ServerError };
     }
   }
 
@@ -24,23 +24,23 @@ class ModelService<T> {
     try {
       const foundUser = await this.model.findByPk(id);
       if (foundUser) {
-        return { statusCode: sc.Success, model: foundUser };
+        return { statusCode: StatusCode.Success, model: foundUser };
       } else {
-        return { statusCode: sc.NotFound };
+        return { statusCode: StatusCode.NotFound };
       }
     } catch (error) {
       console.error(error);
-      return { statusCode: sc.ServerError };
+      return { statusCode: StatusCode.ServerError };
     }
   }
 
   async save(object: any): Promise<CustomResponse<StatusCode, T>> {
     try {
       const savedModel = await object.save();
-      return { statusCode: sc.Created, model: savedModel };
+      return { statusCode: StatusCode.Created, model: savedModel };
     } catch (error) {
       console.error(error);
-      return { statusCode: sc.ServerError };
+      return { statusCode: StatusCode.ServerError };
     }
   }
 
@@ -50,16 +50,16 @@ class ModelService<T> {
       if (modelToUpdate) {
         try {
           const updatedModel = await modelToUpdate.update(newAttributes);
-          return { statusCode: sc.Success, model: updatedModel };
+          return { statusCode: StatusCode.Success, model: updatedModel };
         } catch (error) {
-          return { statusCode: sc.InvalidData };
+          return { statusCode: StatusCode.InvalidData };
         }
       } else {
-        return { statusCode: sc.NotFound };
+        return { statusCode: StatusCode.NotFound };
       }
     } catch (error) {
       console.error(error);
-      return { statusCode: sc.ServerError };
+      return { statusCode: StatusCode.ServerError };
     }
   }
 
@@ -69,13 +69,13 @@ class ModelService<T> {
 
       if (modelToDelete) {
         modelToDelete.destroy();
-        return { statusCode: sc.NoContent };
+        return { statusCode: StatusCode.NoContent };
       } else {
-        return { statusCode: sc.NotFound };
+        return { statusCode: StatusCode.NotFound };
       }
     } catch (error) {
       console.error(error);
-      return { statusCode: sc.ServerError };
+      return { statusCode: StatusCode.ServerError };
     }
   }
 }

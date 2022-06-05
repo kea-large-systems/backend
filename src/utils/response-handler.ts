@@ -15,12 +15,8 @@ export const responseHandler = async (
     case StatusCode.NoContent:
       return res.status(202).send();
     case StatusCode.NotFound:
-      return res
-        .status(404)
-        .send({ error: 404, message: `${name} not found.` });
+      return res.status(404).send({ error: 404, message: `${name} not found.` });
     default:
-      return res
-        .status(500)
-        .send({ error: 500, message: `Internal server error` });
+      return res.status(500).send({ error: 500, message: `Internal server error` });
   }
 };

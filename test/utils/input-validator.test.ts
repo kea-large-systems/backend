@@ -28,7 +28,7 @@ const invalidPartitions = [
 
 describe("checks stringDate function", () => {
   test.each(validPartitions)("when the date is '%s' date should be valid", (validDate)=> {
-    // Arrange
+    // Act
     const result = stringDateTime(validDate); 
     // Assert
     expect(result).not.toBeNull();
