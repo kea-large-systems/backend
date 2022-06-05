@@ -24,6 +24,8 @@ const invalidPartitions = [
   ["2022/06/03 20:44"],
 ];
 
+// ---------------------------------- Tests -----------------------------------
+
 describe("checks stringDate function", () => {
   test.each(validPartitions)("when the date is '%s' date should be valid", (validDate)=> {
     // Arrange
