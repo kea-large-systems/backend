@@ -4,7 +4,7 @@ import { StatusCode } from "./status-code";
 
 export const responseHandler = async (
   name: string,
-  response: CustomResponse<any>,
+  response: CustomResponse<StatusCode, any>,
   res: Response
 ) => {
   switch (response.statusCode) {
@@ -18,7 +18,7 @@ export const responseHandler = async (
       return res
         .status(404)
         .send({ error: 404, message: `${name} not found.` });
-    case StatusCode.ServerError:
+    default:
       return res
         .status(500)
         .send({ error: 500, message: `Internal server error` });

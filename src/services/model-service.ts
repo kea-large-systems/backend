@@ -1,5 +1,5 @@
 import { CustomResponse } from "../utils/custom-response";
-import { StatusCode as sc } from "../utils/status-code";
+import { StatusCode as sc, StatusCode } from "../utils/status-code";
 
 /**
  * Generic Service class for our models to do handle errors and logic
@@ -10,7 +10,7 @@ class ModelService<T> {
    */
   constructor(protected model: any) {}
 
-  async findAll(): Promise<CustomResponse<T>> {
+  async findAll(): Promise<CustomResponse<StatusCode, T>> {
     try {
       const foundModels = await this.model.findAll();
       return { statusCode: sc.Success, model: foundModels };
@@ -20,7 +20,7 @@ class ModelService<T> {
     }
   }
 
-  async findByPk(id: string): Promise<CustomResponse<T>> {
+  async findByPk(id: string): Promise<CustomResponse<StatusCode, T>> {
     try {
       const foundUser = await this.model.findByPk(id);
       if (foundUser) {
@@ -34,7 +34,7 @@ class ModelService<T> {
     }
   }
 
-  async save(object: any): Promise<CustomResponse<T>> {
+  async save(object: any): Promise<CustomResponse<StatusCode, T>> {
     try {
       const savedModel = await object.save();
       return { statusCode: sc.Created, model: savedModel };
@@ -44,7 +44,7 @@ class ModelService<T> {
     }
   }
 
-  async update(id: string, newAttributes: any): Promise<CustomResponse<T>> {
+  async update(id: string, newAttributes: any): Promise<CustomResponse<StatusCode, T>> {
     try {
       const modelToUpdate = await this.model.findByPk(id);
       if (modelToUpdate) {
@@ -63,7 +63,7 @@ class ModelService<T> {
     }
   }
 
-  async delete(id: string): Promise<CustomResponse<T>> {
+  async delete(id: string): Promise<CustomResponse<StatusCode, T>> {
     try {
       const modelToDelete = await this.model.findByPk(id);
 

@@ -38,7 +38,7 @@ class ClassCodeService {
     }
   }
 
-  static validateCode(code: string): CustomResponse<number> {
+  static validateCode(code: string): CustomResponse<StatusCode, number> {
     let lectureId = 0;
 
     ClassCodeService.validCodes.forEach((value, key) => {
@@ -55,7 +55,7 @@ class ClassCodeService {
   }
 
   static async markAttendance(
-    status: CustomResponse<number>,
+    status: CustomResponse<StatusCode, number>,
     userId: string,
     res: Response
   ) {
