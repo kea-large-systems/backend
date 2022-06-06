@@ -16,8 +16,10 @@ jobs:
           version: 20.10.12
       - run:
           name: Checking ENV
+          environment:
+            DB_USERNAME: $DB_USERNAME
           command: |
-            echo $DB_USERNAME $DB_PASSWORD
+            echo $DB_USERNAME ${DB_PASSWORD}
       - run:
           name: Build using `docker-compose`
           environment:
