@@ -92,7 +92,6 @@ describe("test subject router", () => {
       const response = await request(app)
         .patch("/12").send({ name: "test patch" });
       expect(response.status).toBe(200);
-      console.log(response.body);
       expect(response.body).toStrictEqual({ subjectId: 12, name: "test patch", teacherUserId: 4, classId: 5 });
     });
     test("fail update subject that not exist", async () => {
