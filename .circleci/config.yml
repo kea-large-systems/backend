@@ -1,4 +1,10 @@
 version: 2.1
+executors:
+  runner:
+    machine:
+      image: "ubuntu-2004:current"
+      docker_layer_caching: true
+
 jobs:
   build:
     docker:
@@ -11,10 +17,6 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - setup_remote_docker:
-          #docker_layer_caching: true # should not be important
-          #version: 20.10.12
-          name: testing
       - run:
           name: Test for ENV
           command: |
