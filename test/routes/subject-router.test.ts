@@ -1,4 +1,3 @@
-import { subjectAssociationInit, subjectInit } from "../../src/models/subjects";
 import request from "supertest";
 import { SubjectRouter } from "../../src/routes/subject-router";
 import { TEACHER_ROLE_ID } from "../../src/config/constants";
@@ -7,15 +6,14 @@ import passport from "passport";
 import { Sequelize } from "sequelize";
 import { loadDB } from "../../src/utils/model-loader";
 import { Express } from "express-serve-static-core";
-import "dotenv/config"
+import "dotenv/config";
 
-let app: Express;
-let sequelize: Sequelize;
-const {DB_USERNAME,DB_PASSWORD,DB_HOST,DATABASE} = process.env;
+const { DB_USERNAME, DB_PASSWORD, DB_HOST, DATABASE } = process.env;
 describe("test subject router", () => {
-
-	beforeAll(async () => {
-		sequelize = new Sequelize(DATABASE!, DB_USERNAME!, DB_PASSWORD!, {
+  let app: Express;
+  let sequelize: Sequelize;
+  beforeAll(async () => {
+    sequelize = new Sequelize(DATABASE!, DB_USERNAME!, DB_PASSWORD!, {
       host: DB_HOST!,
       dialect: "mysql",
       logging: false,
@@ -23,26 +21,24 @@ describe("test subject router", () => {
         timestamps: false,
       },
     });
+    await loadDB(sequelize);
+    app = express();
+    app.use(json());
+    app.use(passport.initialize());
+    app.use((req, res, next) => {
+      req.isAuthenticated = () => true;
+      req.user = {
+        email: "abcd@test.com",
+        name: "big fart",
+        roleId: TEACHER_ROLE_ID,
+        userId: "1",
+      };
+      next();
+    });
+    app.use(SubjectRouter);
+  });
 
-		await loadDB(sequelize);
-
-		app = express();
-		app.use(json());
-		app.use(passport.initialize());
-		app.use((req, res, next) => {
-			req.isAuthenticated = () => true;
-			req.user = {
-				email: "abcd@test.com",
-				name: "big fart",
-				roleId: TEACHER_ROLE_ID,
-				userId: "1",
-			};
-			next();
-		});
-		app.use(SubjectRouter);
-	});
-
-  describe("/:subjectId", () => {
+  describe("get /:subjectId", () => {
     test("Id that exists in database", async () => {
       const response = await request(app)
         .get("/1");
@@ -63,7 +59,7 @@ describe("test subject router", () => {
     });
   });
 
-  describe("/", () => {
+  describe("get /", () => {
     test("Gets all subject from db", async () => {
       const response = await request(app)
         .get("/");
@@ -75,33 +71,63 @@ describe("test subject router", () => {
   describe("post /", () => {
     test("checks create new subject", async () => {
       const response = await request(app)
-        .post("/").send({ name: "test post", classId: "1",  teacherUserId: "1" });
-			expect(response.status).toBe(201);
-			expect(response.body).toStrictEqual({ subjectId: 13, name: 'test post', teacherUserId: '1', classId: '1' });
+        .post("/").send({ name: "test post", classId: "1", teacherUserId: "1" });
+      expect(response.status).toBe(201);
+      expect(response.body).toStrictEqual({ subjectId: 13, name: "test post", teacherUserId: "1", classId: "1" });
     });
-		test("checks create new subject", async () => {
+    test("checks create new subject failed on class id that not exist", async () => {
       const response = await request(app)
-        .post("/").send({ name: "test post", classId: "1",  teacherUserId: "1" });
-			expect(response.status).toBe(201);
-			expect(response.body).toStrictEqual({ subjectId: 13, name: 'test post', teacherUserId: '1', classId: '1' });
+        .post("/").send({ name: "test post", classId: "300", teacherUserId: "1" });
+      expect(response.status).toBe(500);
+    });
+    test("checks create new subject failed on teacher id that not exist", async () => {
+      const response = await request(app)
+        .post("/").send({ name: "test post", classId: "1", teacherUserId: "300" });
+      expect(response.status).toBe(500);
     });
   });
 
-  describe("patch /:subjectId", ()=> {
-    test("checks update subject", ()=> {})
-  })
+  describe("patch /:subjectId", () => {
+    test("update subject", async () => {
+      const response = await request(app)
+        .patch("/12").send({ name: "test patch" });
+      expect(response.status).toBe(200);
+      console.log(response.body);
+      expect(response.body).toStrictEqual({ subjectId: 12, name: "test patch", teacherUserId: 4, classId: 5 });
+    });
+    test("fail update subject that not exist", async () => {
+      const response = await request(app)
+        .patch("/20").send({ name: "test patch" });
+      expect(response.status).toBe(404);
+    });
+    test("fail update subject that not teacherUserId does not exist", async () => {
+      const response = await request(app)
+        .patch("/12").send({ name: "test patch",teacherUserId: 20 });
+      expect(response.status).toBe(500);
+    });
+  });
 
-  describe("delete /:subject", ()=> {
-    test("delete subject", ()=>{})
-  })
+  describe("delete /:subject", () => {
+    test("delete subject", async () => {
+      const response = await request(app)
+        .delete("/12").send({ name: "test patch" });
+      expect(response.status).toBe(202);
+    });
+    test("attempt to delete subject that not exist", async () => {
+      const response = await request(app)
+        .delete("/20").send({ name: "test patch" });
+      expect(response.status).toBe(404);
+    });
 
-	afterAll(() => {
-		sequelize.close();
-	});
+  });
+
+  afterAll(() => {
+    sequelize.close();
+  });
 });
 
 const expectedAllSubjects = [
-	{ subjectId: 1, name: "Testing SW20", teacherUserId: 1, classId: 1 },
+  { subjectId: 1, name: "Testing SW20", teacherUserId: 1, classId: 1 },
   { subjectId: 2, name: "Testing SW21", teacherUserId: 1, classId: 3 },
   { subjectId: 3, name: "Testing SW22", teacherUserId: 1, classId: 5 },
   { subjectId: 4, name: "Web Development WD20", teacherUserId: 2, classId: 2 },
