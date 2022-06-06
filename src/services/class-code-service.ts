@@ -1,27 +1,31 @@
 import { Response } from "express";
 import { Attendance } from "../models/attendances";
+import { Lecture } from "../models/lectures";
 import { CustomResponse } from "../utils/custom-response";
 import { GenericAttendanceService } from "../utils/generic-service-initializer";
 import { responseHandler } from "../utils/response-handler";
 import { StatusCode as sc, StatusCode } from "../utils/status-code";
+import { ModelService } from "./model-service";
 
+const LectureService = new ModelService(Lecture);
 class ClassCodeService {
   static validCodes = new Map<number, string>();
   static CODE_LENGTH: number = 8;
 
-  static generateCode(lectureId: string) {
+  static async generateCode(lectureId: string) {
     const lectureNumber = Number.parseInt(lectureId) || 0;
-
-    if (lectureNumber) {
-      const randomCode = createCode();
-      ClassCodeService.validCodes.set(lectureNumber, randomCode);
-
-      console.log("Valid codes are: ", ClassCodeService.validCodes);
-
-      return randomCode;
-    } else {
-      return "invalid lecture id";
-    }
+		
+		const response = await LectureService.findByPk(lectureId);
+		if(response.statusCode === sc.Success){
+			const randomCode = createCode();
+			ClassCodeService.validCodes.set(lectureNumber, randomCode);
+	
+			console.log("Valid codes are: ", ClassCodeService.validCodes);
+	
+			return randomCode;
+		} else {
+			return "invalid lecture id";
+		}
   }
 
   static deleteCode(lectureId: string) {
