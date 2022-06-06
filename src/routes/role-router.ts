@@ -19,30 +19,6 @@ router.get("/:id", async (req, res) => {
   const response = await GenericRoleService.findByPk(id);
   responseHandler("Role", response, res);
 });
-
-router.post("/", async (req, res) => {
-  const requestObject = filterBody(req.body);
-  const newRole = Role.build(requestObject);
-
-  const response = await GenericRoleService.save(newRole);
-  responseHandler("Role", response, res);
-});
-
-router.patch("/:id", async (req, res) => {
-  const { id } = req.params;
-  const requestObject = filterBody(req.body);
-
-  const response = await GenericRoleService.update(id, requestObject);
-  responseHandler("Role", response, res);
-});
-
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-
-  const response = await GenericRoleService.delete(id);
-  responseHandler("Role", response, res);
-});
-
 /**
  *
  * @param body Request body
