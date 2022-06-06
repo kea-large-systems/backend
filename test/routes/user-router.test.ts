@@ -42,7 +42,7 @@ describe("test user router", () => {
       const response = await request(app)
         .get("/1");
       expect(response.status).toBe(200);
-      expect(response.body).toStrictEqual({ userId: 1, name: "Teacher Bob", email: "bob@kea.dk", roleId: 1 });
+      expect(response.body).toStrictEqual({ userId: 1, name: "Teacher Bob", email: "alex320i@stud.kea.dk", roleId: 1 });
     });
     test("Id that does not exist in the database", async () => {
       const response = await request(app)
@@ -121,11 +121,11 @@ describe("test user router", () => {
   });
 });
 const expectedAllUsers = [
-  { "email": "bob@kea.dk", "name": "Teacher Bob", "roleId": 1, "userId": 1 },
+  { "email": "alex320i@stud.kea.dk", "name": "Teacher Bob", "roleId": 1, "userId": 1 },
   { "email": "ann@kea.dk", "name": "Teacher Ann", "roleId": 1, "userId": 2 },
   { "email": "won@kea.dk", "name": "Teacher Won", "roleId": 1, "userId": 3 },
   { "email": "tom@kea.dk", "name": "Teacher Tom", "roleId": 1, "userId": 4 },
-  { "email": "ada@stud.kea.dk", "name": "Student Ada", "roleId": 2, "userId": 6 },
+  { "email": "cris2041@stud.kea.dk", "name": "Student Ada", "roleId": 2, "userId": 6 },
   { "email": "pam@stud.kea.dk", "name": "Student Pam", "roleId": 2, "userId": 7 },
   { "email": "kit@stud.kea.dk", "name": "Student Kit", "roleId": 2, "userId": 8 },
   { "email": "zoe@stud.kea.dk", "name": "Student Zoe", "roleId": 2, "userId": 9 },

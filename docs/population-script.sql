@@ -8,13 +8,13 @@ INSERT INTO roles VALUES(2, "student");
 -- Users ---------------------------------------------------------------------
 
 -- Teachers
-INSERT INTO users VALUES(1,  'Teacher Bob', 'bob@kea.dk',           1);
+INSERT INTO users VALUES(1,  'Teacher Bob', 'alex320i@stud.kea.dk',           1);
 INSERT INTO users VALUES(2,  'Teacher Ann', 'ann@kea.dk',           1);
 INSERT INTO users VALUES(3,  'Teacher Won', 'won@kea.dk',           1);
 INSERT INTO users VALUES(4,  'Teacher Tom', 'tom@kea.dk',           1);
 
 -- Students
-INSERT INTO users VALUES(6,  'Student Ada', 'ada@stud.kea.dk', 2);
+INSERT INTO users VALUES(6,  'Student Ada', 'cris2041@stud.kea.dk', 2);
 INSERT INTO users VALUES(7,  'Student Pam', 'pam@stud.kea.dk', 2);
 INSERT INTO users VALUES(8,  'Student Kit', 'kit@stud.kea.dk', 2);
 INSERT INTO users VALUES(9,  'Student Zoe', 'zoe@stud.kea.dk', 2);
