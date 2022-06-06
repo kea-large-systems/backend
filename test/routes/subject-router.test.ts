@@ -9,6 +9,7 @@ import { Express } from "express-serve-static-core";
 import "dotenv/config";
 
 const { DB_USERNAME, DB_PASSWORD, DB_HOST, DATABASE } = process.env;
+
 describe("test subject router", () => {
   let app: Express;
   let sequelize: Sequelize;

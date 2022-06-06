@@ -19,6 +19,8 @@ import "dotenv/config"
  */
 
 const { DB_USERNAME, DB_PASSWORD, DB_HOST, DATABASE } = process.env;
+console.error(DB_USERNAME, DB_PASSWORD, DB_HOST);
+
 describe("test class code router", () => {
 
 	// __________________________ TEACHER TESTS __________________________

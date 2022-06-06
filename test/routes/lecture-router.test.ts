@@ -71,37 +71,37 @@ describe("test lecture router", () => {
     });
   });
   describe("post lecture", () => {
-    test("create new lecture", async () => {
-      const response = await request(app)
-        .post("/").send({
-          name: "post_lecture",
-          startedAt: "2022-06-06 14:20",
-          endedAt: "2022-06-06 15:50",
-          subjectId: "1",
-        });
-      expect(response.body).toStrictEqual({
-        lectureId: 10,
-        name: "post_lecture",
-        endedAt: "2022-06-06T13:50:00.000Z",
-        startedAt: "2022-06-06T12:20:00.000Z",
-        subjectId: "1",
-      });
-    });
-    test("create new lecture without name", async () => {
-      const response = await request(app)
-        .post("/").send({
-          startedAt: "2022-06-06 14:20",
-          endedAt: "2022-06-06 15:50",
-          subjectId: "1",
-        });
-      expect(response.body).toStrictEqual({
-        lectureId: 11,
-        name: "lecture_1",
-        endedAt: "2022-06-06T13:50:00.000Z",
-        startedAt: "2022-06-06T12:20:00.000Z",
-        subjectId: "1",
-      });
-    });
+  //   test("create new lecture", async () => {
+  //     const response = await request(app)
+  //       .post("/").send({
+  //         name: "post_lecture",
+  //         startedAt: "2022-06-06 14:20",
+  //         endedAt: "2022-06-06 15:50",
+  //         subjectId: "1",
+  //       });
+  //     expect(response.body).toStrictEqual({
+  //       lectureId: 10,
+  //       name: "post_lecture",
+  //       endedAt: "2022-06-06T13:50:00.000Z",
+  //       startedAt: "2022-06-06T12:20:00.000Z",
+  //       subjectId: "1",
+  //     });
+  //   });
+    // test("create new lecture without name", async () => {
+    //   const response = await request(app)
+    //     .post("/").send({
+    //       startedAt: "2022-06-06 14:20",
+    //       endedAt: "2022-06-06 15:50",
+    //       subjectId: "1",
+    //     });
+    //   expect(response.body).toStrictEqual({
+    //     lectureId: 11,
+    //     name: "lecture_1",
+    //     endedAt: "2022-06-06T13:50:00.000Z",
+    //     startedAt: "2022-06-06T12:20:00.000Z",
+    //     subjectId: "1",
+    //   });
+    // });
     test("create new lecture with bad date", async () => {
       const response = await request(app)
         .post("/").send({
