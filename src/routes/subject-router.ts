@@ -34,8 +34,11 @@ router.get("/by-teacher/:teacherId", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+
   const requestObject = filterBody(req.body);
   const newSubject = Subject.build(requestObject);
+  console.log("requestObject: ", requestObject);
+  console.log("newSubject: ", newSubject);
   const response = await GenericSubjectService.save(newSubject);
   responseHandler("Subject", response, res);
 });
@@ -49,7 +52,6 @@ router.patch("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-
   const response = await GenericSubjectService.delete(id);
   responseHandler("Subject", response, res);
 });
