@@ -15,25 +15,14 @@ jobs:
           docker_layer_caching: true # should not be important
           version: 20.10.12
       - run:
-          name: Build using `docker-compose`
-
+          name: Test for ENV
           command: |
-            MYSQL_ROOT_PASSWORD=$DB_PASSWORD
-            MYSQL_DATABASE=$DATABASE
-            MYSQL_USER=$DB_USERNAME
-            MYSQL_PASSWORD=$DB_PASSWORD
-            PORT=$PORT
-            DATABASE=$DATABASE
-            DB_USERNAME=$DB_USER
-            DB_PASSWORD=$DB_PASSWORD
-            DB_HOST=$DB_HOST,
-            MICROSOFT_CLIENT_ID=$MICROSOFT_CLIENT_ID
-            MICROSOFT_CLIENT_SECRET=$MICROSOFT_CLIENT_SECRET
-            MICROSOFT_CALL_BACK_URL=$MICROSOFT_CALL_BACK_URL
-            MICROSOFT_SCOPE=$MICROSOFT_SCOPE
-            SESSION_SECRET=$SESSION_SECRET
-            SESSION_RESAVE=$SESSION_RESAVE
-            SESSION_SAVEUNINITIALIZED=$SESSION_SAVEUNINITIALIZED,
-            SESSION_COOKIE_SECURE=$SESSION_COOKIE_SECURE
-            FRONTEND_APP=$FRONTEND_APP
+            a=123
+      - run:
+          name: Check docker compose config
+          command: |
+            docker-compose config
+      - run:
+          name: Run tests using `docker-compose`
+          command: |
             docker-compose up --build --exit-code-from test
