@@ -15,6 +15,10 @@ jobs:
           docker_layer_caching: true # should not be important
           version: 20.10.12
       - run:
+          name: Checking ENV
+          command: |
+            echo $DB_USERNAME $DB_PASSWORD
+      - run:
           name: Build using `docker-compose`
           command: |
             docker-compose up test --build --exit-code-from test
