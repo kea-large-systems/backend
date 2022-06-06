@@ -10,7 +10,7 @@ class ModelService<T> {
    */
   constructor(protected model: any) {}
 
-  async findAll(): Promise<CustomResponse<StatusCode, T>> {
+  async findAll(): Promise<CustomResponse<StatusCode, T[]>> {
     try {
       const foundModels = await this.model.findAll();
       return { statusCode: StatusCode.Success, model: foundModels };
@@ -23,6 +23,7 @@ class ModelService<T> {
   async findByPk(id: string): Promise<CustomResponse<StatusCode, T>> {
     try {
       const foundUser = await this.model.findByPk(id);
+      console.log(foundUser);
       if (foundUser) {
         return { statusCode: StatusCode.Success, model: foundUser };
       } else {
@@ -36,6 +37,8 @@ class ModelService<T> {
 
   async save(object: any): Promise<CustomResponse<StatusCode, T>> {
     try {
+      console.log("Object:", object);
+      
       const savedModel = await object.save();
       return { statusCode: StatusCode.Created, model: savedModel };
     } catch (error) {
@@ -47,9 +50,12 @@ class ModelService<T> {
   async update(id: string, newAttributes: any): Promise<CustomResponse<StatusCode, T>> {
     try {
       const modelToUpdate = await this.model.findByPk(id);
+      
       if (modelToUpdate) {
         try {
           const updatedModel = await modelToUpdate.update(newAttributes);
+          console.log(updatedModel);
+          
           return { statusCode: StatusCode.Success, model: updatedModel };
         } catch (error) {
           return { statusCode: StatusCode.InvalidData };

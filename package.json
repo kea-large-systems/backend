@@ -7,9 +7,9 @@
     "start": "node build/app.js",
     "postinstall": "tsc",
     "dev": "nodemon ./src/app.ts",
-    "test": "jest",
-    "test-coverage": "jest --coverage",
-    "test-coverage-generate": "jest --coverage --coverageDirectory=coverage/jest"
+    "test": "jest --silent",
+    "test-coverage": "jest --coverage --silent",
+    "test-coverage-generate": "jest --silent --coverage --coverageDirectory=coverage/jest"
   },
   "repository": {
     "type": "git",
@@ -23,9 +23,10 @@
   ],
   "authors": [
     "Alex Maccagnan",
-    "Cristian-valentin Purcea",
+    "Cristian-Valentin Purcea",
     "Itai Gramse",
-    "Astthor Arnar Bragason"
+    "Astthor Arnar Bragason",
+    "Teodor Jonasson"
   ],
   "license": "MIT",
   "bugs": {

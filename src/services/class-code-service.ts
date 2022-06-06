@@ -76,7 +76,7 @@ const createCode = (): string => {
   const max = 90; // char id: Z
   let randomString = "";
 
-  for (let i = 0; i <= ClassCodeService.CODE_LENGTH; i++) {
+  for (let i = 0; i < ClassCodeService.CODE_LENGTH; i++) {
     const randomLetter = String.fromCharCode(randomNumber(min, max));
     randomString += randomLetter;
   }

@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 
   const requestObject = filterBody(req.body);
   const newSubject = Subject.build(requestObject);
-  const response = await GenericSubjectService.save(newSubject); //Todo: add try catch
+  const response = await GenericSubjectService.save(newSubject);
   responseHandler("Subject", response, res);
 });
 
