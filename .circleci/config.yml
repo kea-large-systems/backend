@@ -20,5 +20,10 @@ jobs:
             echo $DB_USERNAME $DB_PASSWORD
       - run:
           name: Build using `docker-compose`
+          environment:
+            MYSQL_ROOT_PASSWORD: $DB_PASSWORD
+            MYSQL_DATABASE: $DATABASE
+            MYSQL_USER: $DB_USERNAME
+            MYSQL_PASSWORD: $DB_PASSWORD
           command: |
             docker-compose up test --build --exit-code-from test
