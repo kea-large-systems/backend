@@ -1,9 +1,4 @@
-import { responseHandler } from "../../src/utils/response-handler";
-import { stringDateTime } from "../../src/utils/input-validators";
 import { StatusCode } from "../../src/utils/status-code";
-import express, { Response } from "express";
-import { CustomResponse } from "../../src/utils/custom-response";
-import { GenericAttendanceService } from "../../src/utils/generic-service-initializer";
 import { Attendance } from "../../src/models/attendances";
 import { ModelService } from "../../src/services/model-service";
 
