@@ -30,11 +30,11 @@ class ClassCodeService {
 
   static deleteCode(lectureId: string) {
     const lectureNumber = Number.parseInt(lectureId) || 0;
-
+		console.log("Delete code was called! For lectureId: ", lectureId);
     if (lectureNumber) {
       const status = ClassCodeService.validCodes.delete(lectureNumber);
 
-      console.log("Valid codes are: ", ClassCodeService.validCodes);
+      //console.log("Valid codes are: ", ClassCodeService.validCodes);
 
       return status;
     } else {
