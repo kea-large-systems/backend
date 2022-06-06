@@ -16,6 +16,4 @@ jobs:
       - run:
           name: Build using `docker-compose`
           command: |
-            set -x
-            docker-compose build
             docker-compose up test --build --exit-code-from test
