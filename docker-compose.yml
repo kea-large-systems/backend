@@ -38,4 +38,4 @@ services:
       - seccomp:unconfined
     healthcheck:
       test: ["CMD-SHELL", "echo 'HELLO WORLD' "]
-      start_period: 5s
+      start_period: 60s
