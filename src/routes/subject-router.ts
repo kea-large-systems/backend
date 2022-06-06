@@ -17,7 +17,6 @@ router.use(teacherGuard);
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-
   const response = await GenericSubjectService.findByPk(id);
   responseHandler("Subject", response, res);
 });
@@ -37,7 +36,6 @@ router.get("/by-teacher/:teacherId", async (req, res) => {
 router.post("/", async (req, res) => {
   const requestObject = filterBody(req.body);
   const newSubject = Subject.build(requestObject);
-
   const response = await GenericSubjectService.save(newSubject);
   responseHandler("Subject", response, res);
 });
@@ -45,7 +43,6 @@ router.post("/", async (req, res) => {
 router.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const requestObject = filterBody(req.body);
-
   const response = await GenericSubjectService.update(id, requestObject);
   responseHandler("Subject", response, res);
 });
