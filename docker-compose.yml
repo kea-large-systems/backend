@@ -26,9 +26,7 @@ services:
       mysql:
         condition: service_healthy
   mysql:
-    build:
-      context: .
-      dockerfile: ./docker/mysql/Dockerfile
+    image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
       - MYSQL_DATABASE=$DATABASE
@@ -36,6 +34,8 @@ services:
       - MYSQL_PASSWORD=$DB_PASSWORD
     ports:
       - 3306:3306
+    security_opt:
+      - seccomp:unconfined
     healthcheck:
       test: ["CMD-SHELL", "echo 'HELLO WORLD' "]
-      start_period: 60s
+      start_period: 5s
