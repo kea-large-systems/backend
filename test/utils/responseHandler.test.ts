@@ -1,8 +1,5 @@
 import { responseHandler } from "../../src/utils/response-handler";
-import { stringDateTime } from "../../src/utils/input-validators";
 import { StatusCode } from "../../src/utils/status-code";
-import express, { Response } from "express";
-import { CustomResponse } from "../../src/utils/custom-response";
 
 // -------------------------------- Test Cases --------------------------------
 const message = "Values";

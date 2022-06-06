@@ -8,7 +8,7 @@ INSERT INTO roles VALUES(2, "student");
 -- Users ---------------------------------------------------------------------
 
 -- Teachers
-INSERT INTO users VALUES(1,  'Teacher Bob', 'alex320i@stud.kea.dk', 1);
+INSERT INTO users VALUES(1,  'Teacher Bob', 'alex320i@stud.kea.dk',           1);
 INSERT INTO users VALUES(2,  'Teacher Ann', 'ann@kea.dk',           1);
 INSERT INTO users VALUES(3,  'Teacher Won', 'won@kea.dk',           1);
 INSERT INTO users VALUES(4,  'Teacher Tom', 'tom@kea.dk',           1);
