@@ -28,11 +28,6 @@ const responseListFindByPk = [
   [StatusCode.NotFound, null as any], 
 ]
 
-// const statusAndNoResponse = [
-// ];
-
-// const statusWithBodyNoResponse = [
-// ];
 // ---------------------------------- Set-up ----------------------------------
 
 const mockModel = (data?: any) => {
@@ -60,10 +55,6 @@ const mockModelSpecialErr = (data?: any) => {
   model.findByPk = jest.fn(() => {throw Error("something wrong")});
   return model;
 }
-// const mockModelUpdate = () => {
-//   const service: any = {}
-//   service.findByPk = 
-// }
 
 const mockObject = (data?: any) => {
   const obj: any = {};
@@ -80,6 +71,7 @@ const mockObjectErr = () => {
   model.destroy = jest.fn().mockImplementation(() => {throw Error("something wrong")});
   return model;
 }
+
 // ---------------------------------- Tests -----------------------------------
 
 
