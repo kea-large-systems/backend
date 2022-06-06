@@ -7,9 +7,9 @@
     "start": "node build/app.js",
     "postinstall": "tsc",
     "dev": "nodemon ./src/app.ts",
-    "test": "jest --silent",
-    "test-coverage": "jest --coverage --silent",
-    "test-coverage-generate": "jest --silent --coverage --coverageDirectory=coverage/jest"
+    "test": "jest --runInBand --silent",
+    "test-coverage": "jest --runInBand --coverage --silent",
+    "test-coverage-generate": "jest --silent --runInBand --coverageDirectory=coverage/jest"
   },
   "repository": {
     "type": "git",
