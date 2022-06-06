@@ -46,15 +46,15 @@ INSERT INTO subjects VALUES(11, "Large Systems SW21",   4, 3);
 INSERT INTO subjects VALUES(12, "Large Systems SW22",   4, 5);
 
 -- Lectures --------------------------------------------------------------------
-INSERT INTO lectures VALUES(1, "Not Learning Microservices 1",  NOW(),                        (NOW() + interval  90 minute), 12);
-INSERT INTO lectures VALUES(2, "Not Learning Microservices 2", (NOW() + interval 90 minute),  (NOW() + interval 180 minute), 12);
-INSERT INTO lectures VALUES(3, "Not Learning Microservices 3", (NOW() + interval 180 minute), (NOW() + interval 270 minute), 12);
-INSERT INTO lectures VALUES(4, "NoSQL 1",                       NOW(),                        (NOW() + interval  90 minute),  9);
-INSERT INTO lectures VALUES(5, "NoSQL 2",                      (NOW() + interval 90 minute),  (NOW() + interval 180 minute),  9);
-INSERT INTO lectures VALUES(6, "NoSQL 3",                      (NOW() + interval 180 minute), (NOW() + interval 270 minute),  9);
-INSERT INTO lectures VALUES(7, "Unit Testing",                  NOW(),                        (NOW() + interval  90 minute),  3);
-INSERT INTO lectures VALUES(8, "Unit Testing",                 (NOW() + interval 90 minute),  (NOW() + interval 180 minute),  3);
-INSERT INTO lectures VALUES(9, "Unit Testing",                 (NOW() + interval 180 minute), (NOW() + interval 270 minute),  3);
+INSERT INTO lectures VALUES(1, "Not Learning Microservices 1", '2022-06-06 13:14',  ('2022-06-06 13:14' + interval  90 minute), 12);
+INSERT INTO lectures VALUES(2, "Not Learning Microservices 2", '2022-06-06 13:18',  ('2022-06-06 13:18' + interval 180 minute), 12);
+INSERT INTO lectures VALUES(3, "Not Learning Microservices 3", '2022-06-06 13:22',  ('2022-06-06 13:22' + interval 270 minute), 12);
+INSERT INTO lectures VALUES(4, "NoSQL 1",                      '2022-06-06 13:26',  ('2022-06-06 13:26' + interval  90 minute),  9);
+INSERT INTO lectures VALUES(5, "NoSQL 2",                      '2022-06-06 13:30',  ('2022-06-06 13:30' + interval 180 minute),  9);
+INSERT INTO lectures VALUES(6, "NoSQL 3",                      '2022-06-06 13:34',  ('2022-06-06 13:34' + interval 270 minute),  9);
+INSERT INTO lectures VALUES(7, "Unit Testing",                 '2022-06-06 13:40',  ('2022-06-06 13:40' + interval  90 minute),  3);
+INSERT INTO lectures VALUES(8, "Unit Testing",                 '2022-06-06 13:44',  ('2022-06-06 13:44' + interval 180 minute),  3);
+INSERT INTO lectures VALUES(9, "Unit Testing",                 '2022-06-06 13:50',  ('2022-06-06 13:50' + interval 270 minute),  3);
 
 -- Attendance -------------------------------------------------------------------
 INSERT INTO attendances VALUES(1,  '2022-06-06 13:14',        	1, 5);

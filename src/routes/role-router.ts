@@ -24,9 +24,5 @@ router.get("/:id", async (req, res) => {
  * @param body Request body
  * @returns Object containing all needed user attributes
  */
-const filterBody = (body: { name: any }) => {
-  const { name } = body;
-  return { name };
-};
 
 export { router as RoleRouter };

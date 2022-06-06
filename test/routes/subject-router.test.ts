@@ -71,9 +71,9 @@ describe("test subject router", () => {
   describe("post /", () => {
     test("checks create new subject", async () => {
       const response = await request(app)
-        .post("/").send({ name: "test post", classId: "1", teacherUserId: "1" });
+        .post("/").send({ name: "test post", classId: "1", teacherUserId: "2" });
       expect(response.status).toBe(201);
-      expect(response.body).toStrictEqual({ subjectId: 13, name: "test post", teacherUserId: "1", classId: "1" });
+      expect(response.body).toStrictEqual({ subjectId: 13, name: "test post", teacherUserId: "2", classId: "1" });
     });
     test("checks create new subject failed on class id that not exist", async () => {
       const response = await request(app)
@@ -117,9 +117,24 @@ describe("test subject router", () => {
         .delete("/20").send({ name: "test patch" });
       expect(response.status).toBe(404);
     });
-
   });
+  describe("get by-teacher/:teacherId", ()=> {
+    test("receives subjects by teacher id",async ()=> {
+      const response =await request(app)
+        .get("/by-teacher/1")
+      expect(response.body).toStrictEqual([
+        { subjectId: 1, name: 'Testing SW20', teacherUserId: 1, classId: 1 },
+        { subjectId: 2, name: 'Testing SW21', teacherUserId: 1, classId: 3 },
+        { subjectId: 3, name: 'Testing SW22', teacherUserId: 1, classId: 5 }
+      ])
+    })
+    test("test to get teacher classes for non exist teacher", async ()=> {
+      const response = await request(app)
+        .delete("/by-teacher/20").send({ name: "test patch" });
+      expect(response.status).toBe(404);
 
+    })
+  })
   afterAll(() => {
     sequelize.close();
   });

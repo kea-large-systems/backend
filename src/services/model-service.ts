@@ -37,8 +37,6 @@ class ModelService<T> {
 
   async save(object: any): Promise<CustomResponse<StatusCode, T>> {
     try {
-      console.log("Object:", object);
-      
       const savedModel = await object.save();
       return { statusCode: StatusCode.Created, model: savedModel };
     } catch (error) {

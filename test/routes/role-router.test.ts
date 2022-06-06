@@ -5,7 +5,6 @@ import { loadDB } from "../../src/utils/model-loader";
 import express, { json } from "express";
 import passport from "passport";
 import { TEACHER_ROLE_ID } from "../../src/config/constants";
-import { UserRouter } from "../../src/routes/user-router";
 import request from "supertest";
 import { RoleRouter } from "../../src/routes/role-router";
 
@@ -42,12 +41,10 @@ describe("test role router", () => {
   describe("role router", () => {
     test(" get /", async () => {
       const response = await request(app).get("/");
-      console.log(response.body);
       expect(response.body).toStrictEqual([{"name": "student", "roleId": 2}, {"name": "teacher", "roleId": 1}]);
     });
     test("get /roleId", async ()=> {
       const response = await request(app).get("/1");
-      console.log(response.body);
       expect(response.body).toStrictEqual({"name": "teacher", "roleId": 1});
     })
     test("get /roleId failed with id that not exist", async ()=> {
@@ -55,7 +52,7 @@ describe("test role router", () => {
       expect(response.status).toBe(404)
       expect(response.body.message).toStrictEqual("Role not found.");
     })
-    test("get /roleIdfailed with id that not in the right form", async ()=> {
+    test("get /roleId failed with id that not in the right form", async ()=> {
       const response = await request(app).get("/failedid");
       expect(response.status).toBe(404)
       expect(response.body.message).toStrictEqual("Role not found.");
