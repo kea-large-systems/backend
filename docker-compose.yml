@@ -23,7 +23,7 @@ services:
     ports:
       - 4200:4200
     depends_on:
-      - mysql:
+      mysql: 
         condition: service_healthy
   mysql:
     build:
