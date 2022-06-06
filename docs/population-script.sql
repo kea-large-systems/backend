@@ -8,7 +8,7 @@ INSERT INTO roles VALUES(2, "student");
 -- Users ---------------------------------------------------------------------
 
 -- Teachers
-INSERT INTO users VALUES(1,  'Teacher Bob', 'alex320i@stud.kea.dk',           1);
+INSERT INTO users VALUES(1,  'Teacher Bob', 'alex320i@stud.kea.dk', 1);
 INSERT INTO users VALUES(2,  'Teacher Ann', 'ann@kea.dk',           1);
 INSERT INTO users VALUES(3,  'Teacher Won', 'won@kea.dk',           1);
 INSERT INTO users VALUES(4,  'Teacher Tom', 'tom@kea.dk',           1);
@@ -57,17 +57,17 @@ INSERT INTO lectures VALUES(8, "Unit Testing",                 (NOW() + interval
 INSERT INTO lectures VALUES(9, "Unit Testing",                 (NOW() + interval 180 minute), (NOW() + interval 270 minute),  3);
 
 -- Attendance -------------------------------------------------------------------
-INSERT INTO attendances VALUES(1,   NOW(),                        1, 5);
-INSERT INTO attendances VALUES(2,   NOW(),                        1, 6);
-INSERT INTO attendances VALUES(3,   NOW(),                        1, 7);
-INSERT INTO attendances VALUES(4,   NOW(),                        1, 8);
-INSERT INTO attendances VALUES(5,   NOW(),                        1, 9);
-INSERT INTO attendances VALUES(6,  (NOW() + interval 95 minute),  2, 5);
-INSERT INTO attendances VALUES(7,  (NOW() + interval 96 minute),  2, 6);
-INSERT INTO attendances VALUES(8,  (NOW() + interval 97 minute),  2, 7);
-INSERT INTO attendances VALUES(9,  (NOW() + interval 98 minute),  2, 8);
-INSERT INTO attendances VALUES(10, (NOW() + interval 95 minute),  2, 5);
-INSERT INTO attendances VALUES(11, (NOW() + interval 185 minute), 2, 5);
-INSERT INTO attendances VALUES(12, (NOW() + interval 186 minute), 2, 6);
-INSERT INTO attendances VALUES(13, (NOW() + interval 187 minute), 2, 7);
+INSERT INTO attendances VALUES(1,  '2022-06-06 13:14',        	1, 5);
+INSERT INTO attendances VALUES(2,  '2022-06-06 13:14',          1, 6);
+INSERT INTO attendances VALUES(3,  '2022-06-06 13:14',          1, 7);
+INSERT INTO attendances VALUES(4,  '2022-06-06 13:14',          1, 8);
+INSERT INTO attendances VALUES(5,  '2022-06-06 13:14',          1, 9);
+INSERT INTO attendances VALUES(6,  '2022-06-06 13:14',  				2, 5);
+INSERT INTO attendances VALUES(7,  '2022-06-06 13:14',  				2, 6);
+INSERT INTO attendances VALUES(8,  '2022-06-06 13:14',  				2, 7);
+INSERT INTO attendances VALUES(9,  '2022-06-06 13:14',  				2, 8);
+INSERT INTO attendances VALUES(10, '2022-06-06 13:14',  				2, 5);
+INSERT INTO attendances VALUES(11, '2022-06-06 13:14', 					2, 5);
+INSERT INTO attendances VALUES(12, '2022-06-06 13:14', 					2, 6);
+INSERT INTO attendances VALUES(13, '2022-06-06 13:14', 					2, 7);
 
