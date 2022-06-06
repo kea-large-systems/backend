@@ -23,7 +23,6 @@ class ModelService<T> {
   async findByPk(id: string): Promise<CustomResponse<StatusCode, T>> {
     try {
       const foundUser = await this.model.findByPk(id);
-      console.log(foundUser);
       if (foundUser) {
         return { statusCode: StatusCode.Success, model: foundUser };
       } else {

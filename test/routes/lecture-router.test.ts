@@ -148,7 +148,6 @@ describe("test lecture router", () => {
         .patch("/3").send({
           name: "lecture_patch",
         });
-      console.log(response.body);
       expect(response.body).toStrictEqual({
           lectureId: 3,
           name: "lecture_patch",
