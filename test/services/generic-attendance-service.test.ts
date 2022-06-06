@@ -169,50 +169,50 @@ test("the status code should be '500' when the response is 'Err'", async () => {
 
 // ---------------------------------- update ----------------------------------
 
-test("the status code should be '200' when the save response is '{user: true}'", async () => {
-    // Arrange
-    const mockService = new ModelService<Attendance>(mockModelSpecial());
+// test("the status code should be '200' when the save response is '{user: true}'", async () => {
+//     // Arrange
+//     const mockService = new ModelService<Attendance>(mockModelSpecial());
 
-    // Act
-    const result = await mockService.update("1", {user: true});
+//     // Act
+//     const result = await mockService.update("1", {user: true});
 
-    // Assert
-    expect(result.statusCode).toStrictEqual(StatusCode.Success);
-  }
-);
+//     // Assert
+//     expect(result.statusCode).toStrictEqual(StatusCode.Success);
+//   }
+// );
 
-test("the status code should be '400' when the object response is 'Err'", async () => {
-    // Arrange
-    const mockService = new ModelService<Attendance>(mockModelSpecialErr());
+// test("the status code should be '400' when the object response is 'Err'", async () => {
+//     // Arrange
+//     const mockService = new ModelService<Attendance>(mockModelSpecialErr());
 
-    // Act
-    const result = await mockService.update("1", {user: true});
+//     // Act
+//     const result = await mockService.update("1", {user: true});
 
-    // Assert
-    expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
-  }
-);
+//     // Assert
+//     expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
+//   }
+// );
 
-test("the status code should be '404' when the save response is 'null'", async () => {
-    // Arrange
-    const mockService = new ModelService<Attendance>(mockModelSpecial());
+// test("the status code should be '404' when the save response is 'null'", async () => {
+//     // Arrange
+//     const mockService = new ModelService<Attendance>(mockModelSpecial());
 
-    // Act
-    const result = await mockService.save(mockObject());
+//     // Act
+//     const result = await mockService.save(mockObject());
 
-    // Assert
-    expect(result.statusCode).toStrictEqual(StatusCode.Created);
-  }
-);
+//     // Assert
+//     expect(result.statusCode).toStrictEqual(StatusCode.Created);
+//   }
+// );
 
-test("the status code should be '500' when the model response is 'Err'", async () => {
-    // Arrange
-    const mockService = new ModelService<Attendance>(mockModel());
+// test("the status code should be '500' when the model response is 'Err'", async () => {
+//     // Arrange
+//     const mockService = new ModelService<Attendance>(mockModel());
 
-    // Act
-    const result = await mockService.save(mockObjectErr());
+//     // Act
+//     const result = await mockService.save(mockObjectErr());
 
-    // Assert
-    expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
-  }
-);
+//     // Assert
+//     expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
+//   }
+// );
