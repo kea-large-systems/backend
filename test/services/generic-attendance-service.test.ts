@@ -49,15 +49,15 @@ const mockModelErr = () => {
   return service;
 };
 
-const mockModelSpecial = () => {
+const mockModelSpecial = (data?: any) => {
   const model: any = {}
-  model.findByPk = jest.fn().mockReturnValue(mockObject());
+  model.findByPk = jest.fn().mockReturnValue(data);
   return model;
 }
 
-const mockModelSpecialErr = () => {
+const mockModelSpecialErr = (data?: any) => {
   const model: any = {}
-  model.findByPk = jest.fn().mockReturnValue(mockObject({user: true}));
+  model.findByPk = jest.fn(() => {throw Error("something wrong")});
   return model;
 }
 // const mockModelUpdate = () => {
@@ -69,6 +69,7 @@ const mockObject = (data?: any) => {
   const obj: any = {};
   obj.save = jest.fn().mockReturnValue(data);
   obj.update = jest.fn().mockReturnValue(data);
+  obj.destroy = jest.fn().mockReturnValue(data);
   return obj;
 }
 
@@ -76,6 +77,7 @@ const mockObjectErr = () => {
   const model: any = {};
   model.save = jest.fn().mockImplementation(() => {throw Error("something wrong")});
   model.update = jest.fn().mockImplementation(() => {throw Error("something wrong")});
+  model.destroy = jest.fn().mockImplementation(() => {throw Error("something wrong")});
   return model;
 }
 // ---------------------------------- Tests -----------------------------------
@@ -143,76 +145,125 @@ describe("checks findByPk with mocked error", () => {
 
 // ----------------------------------- save -----------------------------------
 
-test("the status code should be '201' when the save response is '{user: true}'", async () => {
-    // Arrange
-    const mockService = new ModelService<Attendance>(mockModelSpecial());
+describe("checks save() with mocked model data", () => {
+  test("the status code should be '201' when the save response is '{user: true}'", async () => {
+      // Arrange
+      const mockService = new ModelService<Attendance>(mockModelSpecial());
 
-    // Act
-    const result = await mockService.save(mockObject());
+      // Act
+      const result = await mockService.save(mockObject());
 
-    // Assert
-    expect(result.statusCode).toStrictEqual(StatusCode.Created);
-  }
-);
+      // Assert
+      expect(result.statusCode).toStrictEqual(StatusCode.Created);
+    }
+  );
 
-test("the status code should be '500' when the response is 'Err'", async () => {
-    // Arrange
-    const mockService = new ModelService<Attendance>(mockModel());
+  test("the status code should be '500' when the response is 'Err'", async () => {
+      // Arrange
+      const mockService = new ModelService<Attendance>(mockModel());
 
-    // Act
-    const result = await mockService.save(mockObjectErr());
+      // Act
+      const result = await mockService.save(mockObjectErr());
 
-    // Assert
-    expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
-  }
-);
+      // Assert
+      expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
+    }
+  );
+})
+
 
 // ---------------------------------- update ----------------------------------
 
-// test("the status code should be '200' when the save response is '{user: true}'", async () => {
-//     // Arrange
-//     const mockService = new ModelService<Attendance>(mockModelSpecial());
 
-//     // Act
-//     const result = await mockService.update("1", {user: true});
+describe("checks update() with mocked model data", () => {
+  test("the status code should be '200' when the update response is '{user: true}'", async () => {
+      // Arrange
+      const mockService = new ModelService<Attendance>(mockModelSpecial(mockObject({user: true})));
 
-//     // Assert
-//     expect(result.statusCode).toStrictEqual(StatusCode.Success);
-//   }
-// );
+      // Act
+      const result = await mockService.update("1", {user: true});
 
-// test("the status code should be '400' when the object response is 'Err'", async () => {
-//     // Arrange
-//     const mockService = new ModelService<Attendance>(mockModelSpecialErr());
+      // Assert
+      expect(result.statusCode).toStrictEqual(StatusCode.Success);
+    }
+  );
 
-//     // Act
-//     const result = await mockService.update("1", {user: true});
+  test("the status code should be '400' when the object response is 'Err'", async () => {
+      // Arrange
+      const mockService = new ModelService<Attendance>(mockModelSpecial({user: true}));
 
-//     // Assert
-//     expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
-//   }
-// );
+      // Act
+      const result = await mockService.update("1", {user: true});
 
-// test("the status code should be '404' when the save response is 'null'", async () => {
-//     // Arrange
-//     const mockService = new ModelService<Attendance>(mockModelSpecial());
+      // Assert
+      expect(result.statusCode).toStrictEqual(StatusCode.InvalidData);
+    }
+  );
 
-//     // Act
-//     const result = await mockService.save(mockObject());
+  test("the status code should be '404' when the update response is 'null'", async () => {
+      // Arrange
+      const mockService = new ModelService<Attendance>(mockModelSpecial());
 
-//     // Assert
-//     expect(result.statusCode).toStrictEqual(StatusCode.Created);
-//   }
-// );
+      // Act
+      const result = await mockService.update("1", {user: true});
 
-// test("the status code should be '500' when the model response is 'Err'", async () => {
-//     // Arrange
-//     const mockService = new ModelService<Attendance>(mockModel());
+      // Assert
+      expect(result.statusCode).toStrictEqual(StatusCode.NotFound);
+    }
+  );
 
-//     // Act
-//     const result = await mockService.save(mockObjectErr());
+  test("the status code should be '500' when the model response is 'Err'", async () => {
+      // Arrange
+      const mockService = new ModelService<Attendance>(mockModelSpecialErr());
 
-//     // Assert
-//     expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
-//   }
-// );
+      // Act
+      const result = await mockService.update("1", {user: true});
+
+      // Assert
+      expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
+    }
+  );
+});
+
+// ---------------------------------- delete ----------------------------------
+
+
+describe("checks delete() with mocked model data", () => {
+
+  test("the status code should be '202' when the object response is 'void'", async () => {
+      // Arrange
+      const mockService = new ModelService<Attendance>(mockModel(mockObject()));
+
+      // Act
+      const result = await mockService.delete("1");
+
+      // Assert
+      expect(result.statusCode).toStrictEqual(StatusCode.NoContent);
+    }
+  );
+
+  test("the status code should be '404' when the object response is 'null'", async () => {
+      // Arrange
+      const mockService = new ModelService<Attendance>(mockModelSpecial(null));
+
+      // Act
+      const result = await mockService.delete("1");
+
+      // Assert
+      expect(result.statusCode).toStrictEqual(StatusCode.NotFound);
+    }
+  );
+  
+  test("the status code should be '500' when the object response is 'Err'", async () => {
+      // Arrange
+      const mockService = new ModelService<Attendance>(mockModelSpecialErr());
+
+      // Act
+      const result = await mockService.delete("1");
+
+      // Assert
+      expect(result.statusCode).toStrictEqual(StatusCode.ServerError);
+    }
+  );
+
+})

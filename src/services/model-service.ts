@@ -54,7 +54,6 @@ class ModelService<T> {
       if (modelToUpdate) {
         try {
           const updatedModel = await modelToUpdate.update(newAttributes);
-          console.log(updatedModel);
           
           return { statusCode: StatusCode.Success, model: updatedModel };
         } catch (error) {
