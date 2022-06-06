@@ -1,4 +1,4 @@
-import { subjectInit } from "../../src/models/subjects";
+import { subjectAssociationInit, subjectInit } from "../../src/models/subjects";
 import request from "supertest";
 import { SubjectRouter } from "../../src/routes/subject-router";
 import { TEACHER_ROLE_ID } from "../../src/config/constants";
@@ -20,6 +20,7 @@ beforeAll(async () => {
     },
   });
   await loadDB(sequelize);
+  subjectAssociationInit()
   app = express();
   app.use(json());
   app.use(passport.initialize());
