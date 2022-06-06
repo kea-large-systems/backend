@@ -11,9 +11,9 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - setup_remote_docker:
-          docker_layer_caching: true # should not be important
-          version: 20.10.12
+      #- setup_remote_docker:
+          #docker_layer_caching: true # should not be important
+          #version: 20.10.12
       - run:
           name: Test for ENV
           command: |
