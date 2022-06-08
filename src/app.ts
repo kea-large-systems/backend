@@ -26,12 +26,6 @@ const frontendHost = process.env.FRONTEND_APP || "localhost:3000";
 
 // Initialize the express engine
 const app: express.Application = express();
-// app.use(
-//   cors({
-//     origin: frontendHost,
-//     credentials: true,
-//   })
-// );
 app.use(json());
 loadDB(sequelize);
 
@@ -45,6 +39,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 passportSetup.microsoftStrategySetup();
 passportSetup.serialization();
+
+// app.use(cors());
 // __________________________________________________________________________________
 
 // Handling '/' Request
