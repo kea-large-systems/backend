@@ -32,7 +32,6 @@ router.get("/by-teacher/:teacherId", async (req, res) => {
 
   const response = await subjectService.findByTeacherId(teacherId);
   const x = response.model! as Array<Subject>;
-  const subjectClassMap = new Map<any, Subject>();
   for (var element of x) {
     const y = await GenericClassService.findByPk(element.getDataValue("classId"));
     (element as any).classId = y.model!.getDataValue("name");
