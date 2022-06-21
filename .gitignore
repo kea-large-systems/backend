@@ -113,5 +113,4 @@ config.js
 env-config.ts
 
 # Astthors txt notes
-www-astthor-notes.txt
-authAstthorTesting.routes.ts
+Astthor-performance-test.txt
